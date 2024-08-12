@@ -6,9 +6,38 @@
   <title>Open Source Club Members Platform</title>
   <link rel="shortcut icon" href="./media/logos/" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="./style/base.css">
+  <script src="./style/routing.js" defer></script>
+  <script type="module" src="../dist/bundle.js"></script>
 </head>
 <body>
-  <script src="./style/tabs.js"></script>
+
+
+
+  <div id="auth">
+    <div id="login">
+      <h1>Open Source Club Members Platform</h1>
+      <p id="loginMessage"></p>
+      <input type="email" name="email" id="email" autocomplete="email">
+      <input type="password" name="password" id="password" autocomplete="current-password">
+      <button id="loginBtn">Login</button>
+    </div>
+  </div>
+  <button id="logoutBtn">Logout</button>
+  <div id="static">
+    <div id="header">
+
+    </div>
+    <div id="navbar">
+
+    </div>
+    <div id="menu">
+
+    </div>
+  </div>
   
+  <div id="dynamic">
+
+  </div>
+
 </body>
 </html>
