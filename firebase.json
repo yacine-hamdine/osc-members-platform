@@ -24,7 +24,7 @@
   ],
   "hosting": {
     "site": "osc-hub",
-    "public": "dist",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",

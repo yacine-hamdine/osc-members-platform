@@ -4,10 +4,10 @@ module.exports = {
     entry: [
         './src/firebase.js',
         './src/auth.js'
-    ], // Your entry point
+    ],
+    mode: 'development',
     output: {
-        path: path.resolve(__dirname, 'dist'), // Output directory
+        path: path.resolve(__dirname, 'public/system'), // Output directory
         filename: 'bundle.js'
-    },
-    mode: 'development'
+    }
 };

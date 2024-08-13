@@ -3,16 +3,24 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from
 const auth = getAuth();
 
 (
-    function checkAuth(){
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-              document.getElementById("auth").style.display = "none";
-              const uid = user.uid;
-            }
-            else{
-                document.getElementById("auth").style.display = "flex";
-            }
+    async function checkAuth(){
+        let promise = new Promise(resolve => {
+            onAuthStateChanged(auth, (user) => {
+                if(user){
+                    document.getElementById("auth").style.display = "none";
+                    const uid = user.uid;
+                    resolve("none");
+                }
+                else{
+                    document.getElementById("auth").style.display = "flex";
+                    resolve("none");
+                }
+            });
         });
+
+        // Remove Load Screen
+        document.querySelector("#loading").style.display = await promise;
+        
     }
 )();
 
@@ -24,13 +32,16 @@ function login(){
 
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-        const user = userCredential.user;
+        //const user = userCredential.user;
+        console.log(`Login Successful!`);
         console.log(user);
         message.innerHTML = "Login successful!";
+        message.classList.replace('error', 'success');
     })
     .catch((error) => {
         console.log(error);
         message.innerHTML = "Login Failed!";
+        message.classList.replace('success', 'error');
     });
 }
 

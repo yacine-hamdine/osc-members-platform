@@ -7,19 +7,26 @@
   <link rel="shortcut icon" href="./media/logos/" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="./style/base.css">
   <script src="./style/routing.js" defer></script>
-  <script type="module" src="../dist/bundle.js"></script>
+  <script type="module" src="./system/bundle.js"></script>
 </head>
 <body>
 
+  <div id="loading">
+    <img src="./media/logos/OMP LOGO.svg" alt="logo">
+    <div id="dots">
+      <div id="loader"></div>
+    </div>
+  </div>
 
+  <script src="./style/lightdarkmode.js" defer></script>
 
   <div id="auth">
     <div id="login">
-      <h1>Open Source Club Members Platform</h1>
-      <p id="loginMessage"></p>
-      <input type="email" name="email" id="email" autocomplete="email">
-      <input type="password" name="password" id="password" autocomplete="current-password">
-      <button id="loginBtn">Login</button>
+      <h1 class="title">Open Source Club Members Platform</h1>
+      <p class="text" id="loginMessage"></p>
+      <input type="email" name="email" id="email" placeholder="Email" autocomplete="email">
+      <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password">
+      <button class="main-btn" id="loginBtn">Login</button>
     </div>
   </div>
   <button id="logoutBtn">Logout</button>
