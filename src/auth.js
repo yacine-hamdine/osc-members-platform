@@ -2,17 +2,19 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from
 
 const auth = getAuth();
 
+let authPanel = document.getElementById("auth");
+
 (
     async function checkAuth(){
         let promise = new Promise(resolve => {
             onAuthStateChanged(auth, (user) => {
                 if(user){
-                    document.getElementById("auth").style.display = "none";
+                    authPanel.style.display = "none";
                     const uid = user.uid;
                     resolve("none");
                 }
                 else{
-                    document.getElementById("auth").style.display = "flex";
+                    authPanel.style.display = "flex";
                     resolve("none");
                 }
             });
@@ -34,14 +36,15 @@ function login(){
     .then((userCredential) => {
         //const user = userCredential.user;
         console.log(`Login Successful!`);
-        console.log(user);
+        message.classList.add('success');
+        message.classList.remove('error');
         message.innerHTML = "Login successful!";
-        message.classList.replace('error', 'success');
     })
     .catch((error) => {
         console.log(error);
-        message.innerHTML = "Login Failed!";
-        message.classList.replace('success', 'error');
+        message.innerHTML = error.message.toString().replace("Firebase:", "");
+        message.classList.add('error');
+        message.classList.remove('success');
     });
 }
 
@@ -49,10 +52,10 @@ document.getElementById('loginBtn').addEventListener('click', login);
 
 function logout(){
     signOut(auth).then(() => {
-        document.getElementById("auth").style.display = "flex";
+        authPanel.style.display = "flex";
     }).catch((error) => {
         alert(`An error occurred: ${error}`);
-        document.getElementById("auth").style.display = "none";
+        authPanel.style.display = "none";
     });
 }
 

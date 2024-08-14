@@ -31,6 +31,13 @@
     --bg-color: #ffffff;
 
     --el-bg-color: #470068;
+    --box-bg-color: #000000;
+
+    --el-shadow: inset 3px 3px 30px 0px rgba(0,0,0,0.2);
+    --box-shadow: 3px 3px 30px 0px rgba(0, 0, 0, 0.5);
+
+    --el-borderRadius: 50px;
+    --box-borderRadius: 20px;
 
     /* Button Design */
     --main-btn-color: #ffffff;
@@ -105,7 +112,7 @@ body{
 }
 
 button{
-    border-radius: 50px;
+    border-radius:  var(--el-borderRadius);
     width: 40%;
     max-width: 12.5rem;
     height: 2.1875rem; 
@@ -128,10 +135,9 @@ button{
 }
 
 button:hover{
-    --main-btn-color: #000000;
-    --main-btn-bg: #E2FF00;
-    --secondary-btn-color: #E2FF00;
-    --secondary-btn-border: ##E2FF00;
+    --main-btn-bg: #5d00ba;
+    --secondary-btn-color: #5d00ba;
+    --secondary-btn-border: 2px solid #5d00ba;
 }
 
 .success{
@@ -148,12 +154,67 @@ input{
     width: 90%;
     max-width: 18.75rem;
     height: 2.1875rem;
-    border-radius: 50px;
-    color: var(--text-color);
+    border-radius: var(--el-borderRadius);
+    color: #ffffff;
     font-weight: bold;
     padding: 0 1.25rem;
+    box-shadow: var(--el-shadow);
 }
 
 input:focus{
     border: var(--main-btn-border);
+}
+
+input::placeholder{
+    color: #ffffff;
+}
+
+#auth{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 90;
+    background-color: #ae00ff13;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+#auth #login{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: var(--box-borderRadius);
+    background-color: var(--box-bg-color);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 25rem;
+    height: 100%;
+    max-height: 28.125rem;
+}
+
+#auth #login img{
+    width: 75%;
+    max-width: 500px;
+}
+
+#auth #login .title{
+    text-align: center;
+    width: 90%;
+}
+
+#auth #login form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
 }

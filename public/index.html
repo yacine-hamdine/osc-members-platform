@@ -18,20 +18,28 @@
     </div>
   </div>
 
-  <script src="./style/lightdarkmode.js" defer></script>
+  <script src="./style/lightdarkmode.js" async></script>
 
   <div id="auth">
     <div id="login">
+      <img src="./media/logos/OMP LOGO.svg" alt="logo">
       <h1 class="title">Open Source Club Members Platform</h1>
       <p class="text" id="loginMessage"></p>
-      <input type="email" name="email" id="email" placeholder="Email" autocomplete="email">
-      <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password">
-      <button class="main-btn" id="loginBtn">Login</button>
+      <form action="javascript:this.onsubmit = login()">
+        <input type="email" name="email" id="email" placeholder="Email" autocomplete="email" required>
+        <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required>
+        <button type="submit" class="main-btn" id="loginBtn">Login</button>
+      </form>
     </div>
   </div>
-  <button id="logoutBtn">Logout</button>
+
+  <button class="secondary-btn" id="logoutBtn">Logout</button>
+
   <div id="static">
     <div id="header">
+      
+    </div>
+    <div id="member">
 
     </div>
     <div id="navbar">
