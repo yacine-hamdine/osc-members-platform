@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 
 const auth = getAuth();
 
@@ -12,6 +12,7 @@ let authPanel = document.getElementById("auth");
                     authPanel.style.display = "none";
                     const uid = user.uid;
                     resolve("none");
+                    updatePf();
                 }
                 else{
                     authPanel.style.display = "flex";
@@ -34,7 +35,8 @@ function login(){
 
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-        //const user = userCredential.user;
+        const user = userCredential.user;
+        console.log(user);
         console.log(`Login Successful!`);
         message.classList.add('success');
         message.classList.remove('error');
@@ -60,3 +62,15 @@ function logout(){
 }
 
 document.getElementById('logoutBtn').addEventListener('click', logout);
+
+function updatePf(){
+    updateProfile(auth.currentUser, {
+        displayName: "Yacine Mee", photoURL: "https://example.com/jane-q-user/profile.jpg"
+      }).then(() => {
+        // Profile updated!
+        console.log("profile updated");
+      }).catch((error) => {
+        // An error occurred
+        console.log("an error occured, profile not updated !");
+      });
+}

@@ -25,7 +25,7 @@
       <img src="./media/logos/OMP LOGO.svg" alt="logo">
       <h1 class="title">Open Source Club Members Platform</h1>
       <p class="text" id="loginMessage"></p>
-      <form action="javascript:this.onsubmit = login()">
+      <form action="javascript:null">
         <input type="email" name="email" id="email" placeholder="Email" autocomplete="email" required>
         <input type="password" name="password" id="password" placeholder="Password" autocomplete="current-password" required>
         <button type="submit" class="main-btn" id="loginBtn">Login</button>
@@ -33,25 +33,42 @@
     </div>
   </div>
 
-  <button class="secondary-btn" id="logoutBtn">Logout</button>
+  <script src="./style/menu.js" defer></script>
 
   <div id="static">
     <div id="header">
-      
+      <div id="bars">
+        <span id="humburger">
+          <svg id="hmbgr" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+            <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+          </svg>
+        </span>
+      </div>
+      <div id="logo">
+        <img src="./media/logos/OMP LOGO.svg" alt="">
+      </div>
+      <div id="raninkg">
+        &nbsp;
+      </div>
     </div>
     <div id="member">
+      <div id="pfp">
 
+      </div>
+      <div id="ddpp">
+        
+      </div>
     </div>
     <div id="navbar">
 
     </div>
     <div id="menu">
-
+      <button class="secondary-btn" id="logoutBtn">Logout</button>
     </div>
   </div>
   
   <div id="dynamic">
-
+    <h1 class="title">coucous</h1>
   </div>
 
 </body>

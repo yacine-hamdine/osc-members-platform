@@ -68,9 +68,7 @@
     width: 100vw;
     top: 0;
     left: 0;
-    background-color: #ae00ff13;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: #1e002c;      
 }
 
 #loading img{
@@ -94,6 +92,12 @@
 
 body{
     background-color: var(--bg-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 }
 
 .title{
@@ -113,8 +117,8 @@ body{
 
 button{
     border-radius:  var(--el-borderRadius);
-    width: 40%;
-    max-width: 12.5rem;
+    width: 90%;
+    /*max-width: 12.5rem;*/
     height: 2.1875rem; 
     cursor: pointer;
     font-weight: bold;
@@ -152,7 +156,7 @@ input{
     border: none;
     background-color: var(--el-bg-color);
     width: 90%;
-    max-width: 18.75rem;
+    /*max-width: 18.75rem;*/
     height: 2.1875rem;
     border-radius: var(--el-borderRadius);
     color: #ffffff;
@@ -196,8 +200,7 @@ input::placeholder{
     box-shadow: var(--box-shadow);
     width: 100%;
     max-width: 25rem;
-    height: 100%;
-    max-height: 28.125rem;
+    height: 28.125rem;
 }
 
 #auth #login img{
@@ -217,4 +220,128 @@ input::placeholder{
     align-items: center;
     gap: 1.25rem;
     width: 100%;
+}
+
+#static{
+    height: 100%;
+    width: 18.75rem;
+    background-color: var(--el-bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#static > div{
+    width: 90%;
+    /*height: 100px;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#humburger{
+    display: none;
+}
+
+#header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#header > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header #bars{
+    flex-grow: 1;
+}
+
+#header #logo{
+    flex-grow: 2;
+}
+
+#header #ranking{
+    flex-grow: 1;
+    display: none;
+}
+
+#header #logo img{
+    width: 100%;
+}
+
+#dynamic{
+    height: 100%;
+    width: calc(100% - 18.75rem);
+    background-color: var(--bg-color); 
+}
+
+@media screen and (min-width: 50px) and (max-width: 767px){
+    /*Mobile Device Screens*/
+    #auth #login{
+        height: 100%;
+        max-width: 100%;
+        border-radius: 0;
+    }
+    #humburger{
+        display: inline-block;
+        cursor: pointer;
+    }
+    #humburger svg{
+        fill: #ffffff;
+    }
+    #static{
+        position: fixed;
+        top: 0;
+        left: -100%;
+        justify-content: space-between;
+        padding: 60px 0;
+        z-index: 80;
+        transition: .1s all ease-in-out;
+    }
+    #static #header{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 3.125rem;
+        z-index: 70;
+        flex-direction: row;
+    }
+    #header #logo img{
+        width: 10.625rem;
+    }
+    #header #ranking{
+        display: inline-block;
+    }
+    #static #navbar{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 3.125rem;
+        z-index: 70;
+    }
+    #header, #navbar{
+        background-color: var(--el-bg-color);
+    }
+    #dynamic{
+        width: 100%;
+        height: calc(100% - 6.25rem);
+    }
+}
+  
+@media screen and (min-width: 767px) and (max-width: 991px){
+    /*Large Screens*/
+    #static{
+        width: 30vw;
+    }
+    #dynamic{
+        width: 70vw;
+    }
 }
