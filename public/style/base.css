@@ -260,13 +260,14 @@ input::placeholder{
 
 #header #bars{
     flex-grow: 1;
+    width: 0;
 }
 
 #header #logo{
     flex-grow: 2;
 }
 
-#header #ranking{
+#header #spc{
     flex-grow: 1;
     display: none;
 }
@@ -316,7 +317,7 @@ input::placeholder{
     #header #logo img{
         width: 10.625rem;
     }
-    #header #ranking{
+    #header #spc{
         display: inline-block;
     }
     #static #navbar{
