@@ -115,6 +115,10 @@ body{
     color: var(--text-color);
 }
 
+.title, .subtitle, .text{
+    padding: 0 0.625rem;
+}
+
 button{
     border-radius:  var(--el-borderRadius);
     width: 90%;
@@ -228,8 +232,9 @@ input::placeholder{
     background-color: var(--el-bg-color);
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    padding: 1.25rem 0;
 }
 
 #static > div{
@@ -274,6 +279,43 @@ input::placeholder{
 
 #header #logo img{
     width: 100%;
+}
+
+#member{
+    display: grid !important;
+    grid-template-areas: "pfp displayName displayName displayName"
+                         "pfp department department points"
+                         "pfp position position points";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    justify-items: left;
+    align-items: center;
+    width: 100%;
+}
+
+#member #pfp img{
+    border-radius: 50%;
+    width: 100%;
+}
+
+#member #pfp{
+    grid-area: pfp;
+}
+
+#member #displayName{
+    grid-area: displayName;
+}
+
+#member #department{
+    grid-area: department;
+}
+
+#member #position{
+    grid-area: position;
+}
+
+#member #points{
+    grid-area: points;
 }
 
 #dynamic{

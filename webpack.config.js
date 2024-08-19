@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = {
     entry: [
         './src/firebase.js',
-        './src/auth.js'
+        './src/auth.js',
+        './src/profile.js'
     ],
     mode: 'development',
     output: {
