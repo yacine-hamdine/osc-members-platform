@@ -121,7 +121,7 @@ body{
 
 button{
     border-radius:  var(--el-borderRadius);
-    width: 90%;
+    width: 100%;
     /*max-width: 12.5rem;*/
     height: 2.1875rem; 
     cursor: pointer;
@@ -148,6 +148,10 @@ button:hover{
     --secondary-btn-border: 2px solid #5d00ba;
 }
 
+#logoutBtn{
+    border-color: var(--title-color);
+}
+
 .success{
     color: rgb(4, 255, 4);
 }
@@ -159,7 +163,7 @@ button:hover{
 input{
     border: none;
     background-color: var(--el-bg-color);
-    width: 90%;
+    width: 100%;
     /*max-width: 18.75rem;*/
     height: 2.1875rem;
     border-radius: var(--el-borderRadius);
@@ -175,6 +179,10 @@ input:focus{
 
 input::placeholder{
     color: #ffffff;
+}
+
+.icon{
+    fill: var(--title-color);
 }
 
 #auth{
@@ -237,12 +245,16 @@ input::placeholder{
     padding: 1.25rem 0;
 }
 
+#static *{
+    color: var(--title-color);
+}
+
 #static > div{
     width: 90%;
     /*height: 100px;*/
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -318,6 +330,30 @@ input::placeholder{
     grid-area: points;
 }
 
+#navbar, #menu{
+    gap: 20px;
+}
+
+#navbar > *, #menu > *:not(button){
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px 10px;
+    border-radius: 50px;
+}
+
+#navbar > *:hover, #menu > *:hover{
+    background-color: #7800af7b;
+}
+
+.link.active{
+    background-color: var(--bg-color);
+}
+
 #dynamic{
     height: 100%;
     width: calc(100% - 18.75rem);
@@ -334,9 +370,6 @@ input::placeholder{
     #humburger{
         display: inline-block;
         cursor: pointer;
-    }
-    #humburger svg{
-        fill: #ffffff;
     }
     #static{
         position: fixed;
@@ -364,11 +397,22 @@ input::placeholder{
     }
     #static #navbar{
         position: fixed;
+        flex-direction: row !important;
         bottom: 0;
         left: 0;
         width: 100vw;
         height: 3.125rem;
         z-index: 70;
+    }
+    #static #navbar > div{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        height: 90%;
+    }
+    #static #navbar > div > span{
+        display: none;
     }
     #header, #navbar{
         background-color: var(--el-bg-color);

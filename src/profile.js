@@ -1,5 +1,6 @@
 import { app } from './firebase.js';
 import { getFirestore, doc, getDoc} from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 async function getProfile(user){
     const db = getFirestore(app);
@@ -19,10 +20,26 @@ async function getProfile(user){
 export { getProfile };
 
 function showProfile(user, profile){
-    document.querySelector("#pfp img").setAttribute('src', user.photoURL);
     document.querySelector("#displayName").innerHTML = user.displayName;
 
     document.querySelector("#department").innerHTML = profile.department;
     document.querySelector("#position").innerHTML = profile.position;
     document.querySelector("#points").innerHTML = `${profile.points} OPs`;
+
+    const storage = getStorage(app);
+
+    // Reference to the file location in Firebase Storage
+    const storageRef = ref(storage, user.photoURL);
+
+    // Get the download URL
+    getDownloadURL(storageRef)
+    .then((url) => {
+        // Insert url into an <img> tag to display the profile picture
+        const img = document.querySelector('#pfp img');
+        img.src = url;
+    })
+    .catch((error) => {
+        // Handle any errors
+        console.error('Error getting profile picture URL:', error);
+    });
 }

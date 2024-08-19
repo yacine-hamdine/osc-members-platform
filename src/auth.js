@@ -65,7 +65,7 @@ document.getElementById('logoutBtn').addEventListener('click', logout);
 
 function updatePf(){
     updateProfile(auth.currentUser, {
-        displayName: "Yacine Mee", photoURL: "https://firebasestorage.googleapis.com/v0/b/osc-members-platform.appspot.com/o/mee.jpg?alt=media&token=773c8056-59b1-48d1-86a1-b2c431318bb5"
+        displayName: "${Vinos}", photoURL: "usersProfilPictures/vinos.jpg"
       }).then(() => {
         // Profile updated!
         //console.log("profile updated");

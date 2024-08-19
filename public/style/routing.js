@@ -5,6 +5,14 @@ function loadSection(sectionName){
         .then(response => response.text())
         .then(html => {
             contentContainer.innerHTML = html;
+            if(window.innerWidth < 787){
+                document.querySelector("#static").style.left = "-100%";
+            }else{
+                document.querySelectorAll('.link').forEach( link => {
+                    link.classList.remove("active");
+                })
+                document.querySelector(`#${sectionName}`).classList.add("active");
+            }
         })
         .catch(error => {
             console.error('Error loading template:', error);
@@ -13,38 +21,11 @@ function loadSection(sectionName){
         });
 }
 
-function handleRouteChange(route){
-    switch (route){
-        case '/':
-            loadSection('home');
-            break;
-        case '/news':
-            loadSection('news');
-            break;
-        case '/activities':
-            loadSection('activities');
-            break;
-        case '/planner':
-            loadSection('planner');
-            break;
-        case '/profile':
-            loadSection('profile');
-        case '/account':
-            loadSection('account');
-            break;
-        case '/admin':
-            loadSection('admin');
-            break;    
-        default:
-            loadSection('home');
-    }
-}
-
 document.querySelectorAll('.link').forEach( link => {
     link.addEventListener('click', (event) => {
         event.preventDefault();
-        handleRouteChange(link.dataset.url);
+        loadSection(link.id);
     });
 });
 
-handleRouteChange('/');
+loadSection('home');
