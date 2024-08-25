@@ -5,7 +5,7 @@ let r = document.querySelector(":root");
 if(date.getHours() >= 7 && date.getHours() < 19){
     // Light Mode
     r.style.setProperty("--bg-color", "rgb(248, 230, 255)");
-    r.style.setProperty("--title-color", "#470068");
+    r.style.setProperty("--title-color", "#7c01b6");// #470068
     r.style.setProperty("--text-color", "#000000");
     r.style.setProperty("--el-bg-color", "#dc8fff");
     r.style.setProperty("--box-bg-color", "#ffffff");
