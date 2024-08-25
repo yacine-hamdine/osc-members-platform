@@ -7,12 +7,11 @@ function loadSection(sectionName){
             contentContainer.innerHTML = html;
             if(window.innerWidth < 787){
                 document.querySelector("#static").style.left = "-100%";
-            }else{
-                document.querySelectorAll('.link').forEach( link => {
-                    link.classList.remove("active");
-                })
-                document.querySelector(`#${sectionName}`).classList.add("active");
             }
+            document.querySelectorAll('.link').forEach( link => {
+                link.classList.remove("active");
+            });
+            document.querySelector(`#${sectionName}`).classList.add("active");
         })
         .catch(error => {
             console.error('Error loading template:', error);

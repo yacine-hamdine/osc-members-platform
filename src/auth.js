@@ -38,15 +38,15 @@ function login(){
         //const user = userCredential.user;
         //console.log(user);
         //console.log(`Login Successful!`);
-        message.classList.add('success');
-        message.classList.remove('error');
+        message.classList.toggle('error');
+        message.classList.toggle('success');
         message.innerHTML = "Login successful!";
     })
     .catch((error) => {
         console.log(error);
         message.innerHTML = error.message.toString().replace("Firebase:", "");
-        message.classList.add('error');
-        message.classList.remove('success');
+        message.classList.toggle('error');
+        message.classList.toggle('success');
     });
 }
 
@@ -54,6 +54,7 @@ document.getElementById('loginBtn').addEventListener('click', login);
 
 function logout(){
     signOut(auth).then(() => {
+        document.getElementById("loginMessage").innerHTML = "";
         authPanel.style.display = "flex";
     }).catch((error) => {
         alert(`An error occurred: ${error}`);

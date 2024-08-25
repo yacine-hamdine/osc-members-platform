@@ -243,6 +243,7 @@ input::placeholder{
     justify-content: space-between;
     align-items: center;
     padding: 1.25rem 0;
+    overflow-y: auto;
 }
 
 #static *{
@@ -357,7 +358,8 @@ input::placeholder{
 #dynamic{
     height: 100%;
     width: calc(100% - 18.75rem);
-    background-color: var(--bg-color); 
+    background-color: var(--bg-color);
+    padding: 1.25rem 0.625rem;
 }
 
 @media screen and (min-width: 50px) and (max-width: 767px){

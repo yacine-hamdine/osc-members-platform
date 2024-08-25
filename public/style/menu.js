@@ -1,23 +1,18 @@
-let menu = document.getElementById('static');
-
-function whenClickOutside(){
-    document.getElementById('dynamic').addEventListener("click", () => {
-        // Close Menu
-        menu.style.left = '-100%';
-    });
-}
-
-menu.style.left != '-100%' ? whenClickOutside() : null;
-
 function menuPanel(){
-
+    let menu = document.getElementById('static');
     let btn = document.getElementById('humburger');
     
     btn.onclick = (ev) => {
         if(menu.style.left != '0px'){
             // Open Menu
             menu.style.left = '0px';
+            ev.stopPropagation();
+
             // When Click Outside
+            document.addEventListener("click", () => {
+                // Close Menu
+                menu.style.left = '-100%';
+            });
         }else{
             // Close Menu
             menu.style.left = '-100%';
