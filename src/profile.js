@@ -35,11 +35,17 @@ function showProfile(user, profile){
     getDownloadURL(storageRef)
     .then((url) => {
         // Insert url into an <img> tag to display the profile picture
-        const img = document.querySelector('#pfp img');
-        img.src = url;
+        const imgs = document.querySelectorAll('#pfp img');
+        imgs.forEach(img => {
+            img.src = url;
+        });
     })
     .catch((error) => {
         // Handle any errors
         console.error('Error getting profile picture URL:', error);
     });
+
+    // Save All That to Local Storage
+    localStorage.setItem('profile', JSON.stringify(profile));
+
 }

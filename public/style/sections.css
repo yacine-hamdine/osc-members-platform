@@ -42,11 +42,61 @@
 
 .container:has(:checked:nth-of-type(1)) .content-1, 
 .container:has(:checked:nth-of-type(2)) .content-2{
-    display: block;
+    display: grid;
 }
 
 @media screen and (min-width: 50px) and (max-width: 767px){
     .header{
         text-align: center;
     }
+}
+
+/* profile section design */
+
+.container .content .profile{
+    grid-template-areas:  "pfp displayName displayName"
+                          "pfp points points"
+                          "department department department"
+                          "position position position"
+                          "roles roles roles";
+    gap: 0.625rem;
+    width: 100%;
+    max-width: 450px;
+}
+
+.container .content .profile > div{
+    display: flex;
+    align-items: center;
+    justify-content: left;
+
+}
+
+.container .content .profile #pfp{
+    grid-area: pfp;
+    width: 50px;
+}
+
+.container .content .profile #pfp img{
+    width: 100px;
+    border-radius: 50%;
+}
+
+.container .content .profile #displayName{
+    grid-area: displayName;
+}
+
+.container .content .profile #department{
+    grid-area: department;
+}
+
+.container .content .profile #position{
+    grid-area: position;
+}
+
+.container .content .profile #points{
+    grid-area: points;
+}
+
+.container .content .profile #roles{
+    grid-area: roles;
 }

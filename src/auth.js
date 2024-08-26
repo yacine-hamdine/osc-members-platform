@@ -12,6 +12,10 @@ let authPanel = document.getElementById("auth");
                 if(user){
                     authPanel.style.display = "none";
                     getProfile(user);
+                    
+                    // Save to Local Storage
+                    localStorage.setItem('user', JSON.stringify(user));
+                    
                     resolve("none");
                     //updatePf();
                 }
@@ -66,12 +70,14 @@ document.getElementById('logoutBtn').addEventListener('click', logout);
 
 function updatePf(){
     updateProfile(auth.currentUser, {
-        displayName: "${Vinos}", photoURL: "usersProfilPictures/vinos.jpg"
+        displayName: document.querySelector(".content .profile #displayName b").innerText
+        //photoURL: "usersProfilPictures/vinos.jpg"
       }).then(() => {
         // Profile updated!
-        //console.log("profile updated");
+        console.log("profile updated");
       }).catch((error) => {
         // An error occurred
         console.log("an error occured, profile not updated !");
       });
 }
+

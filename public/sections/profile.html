@@ -1,11 +1,13 @@
 <div class="container">
 
+    
     <div class="header">
         <div class="title">Profile</div>
     </div>
     
 
     <div class="tabs">
+
         <input type="radio" name="tabs" id="infos" checked>
         <label class="subtitle" for="infos">Infos</label>
         
@@ -13,13 +15,42 @@
         <label class="subtitle"  for="badge">Badge</label>
     </div>
 
+
+
     <div class="content">
-        <div class="content-1 text">
-            Infos
+
+        <div class="content-1 profile text">
+            <div id="pfp">
+                <label for="newPfp">
+                    <img src="" alt="pfp" id="currentPfp">
+                </label>
+                <input type="file" id="newPfp" accept="image/*" style="visibility: hidden; height: 0;">
+            </div>
+
+            <div class="subtitle" id="displayName">
+                <b contenteditable="true"></b>
+            </div>
+            <div class="text" id="points">
+                Points : &nbsp;<b></b>
+            </div>
+            <div class="text" id="department">
+                Department : &nbsp;<b></b>
+            </div>
+            <div class="text" id="position">
+                Position : &nbsp;<b></b>
+            </div>
+            <div class="text" id="roles">
+                Roles : &nbsp;<b></b>
+            </div>
+
+            <button onclick="updatePf()">Update</button>
         </div>
+
         <div class="content-2 text">
-            Badge
+            Coming Soon ...
         </div>
+
     </div>
+
 
 </div>
