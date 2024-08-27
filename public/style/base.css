@@ -130,6 +130,13 @@ button{
     padding: 0 1.25rem;
 }
 
+button:disabled{
+    cursor: not-allowed;
+    opacity: 0.5;
+    pointer-events: none;
+    
+}
+
 .main-btn{
     color: var(--main-btn-color);
     background: var(--main-btn-bg);
@@ -313,6 +320,7 @@ input::placeholder{
 
 #member #pfp{
     grid-area: pfp;
+    overflow: hidden;
 }
 
 #member #displayName{

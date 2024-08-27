@@ -1,17 +1,5 @@
 const contentContainer = document.getElementById('dynamic');
 
-function loadScript(scriptName){
-    fetch(`./sections/scripts/${scriptName}.js`)
-        .then(response => response.text())
-        .then(script => {
-            eval(script);
-        })
-        .catch(error => {
-            console.error('Error loading Script:', error);
-            alert(`Error loading script. Please try again, if the problem perisides please contact support.
-                   Error Details: ${error}`);
-        });
-}
 function loadSection(sectionName){
     fetch(`./sections/${sectionName}.html`)
         .then(response => response.text())
@@ -19,11 +7,31 @@ function loadSection(sectionName){
             
             // Loading Correspondant HTML
             contentContainer.innerHTML = html;
-            
 
-            // Loading Correspondant Scripts
-            if(document.querySelector(`#${sectionName}`).dataset.scripts != undefined){
-                loadScript(sectionName);
+            // Loading Correspondant JS
+            if(sectionName == "home"){
+                //homePage();
+            }
+            else if(sectionName == "news"){
+                //newsPage();
+            }
+            else if(sectionName == "create"){
+                //createPage();
+            }
+            else if(sectionName == "activities"){
+                //activitiesPage();
+            }
+            else if(sectionName == "planner"){
+                //plannerPage();
+            }
+            else if(sectionName == "profile"){
+                profilePage();
+            }
+            else if(sectionName == "account"){
+                //accountPage();
+            }
+            else if(sectionName == "sudo"){
+                //sudoPage();
             }
 
             // Applying Some Styles
@@ -39,8 +47,8 @@ function loadSection(sectionName){
         })
         .catch(error => {
             console.error('Error loading template:', error);
-            alert(`Error loading section. Please try again, if the problem perisides please contact support.
-                   Error Details: ${error}`);
+            //alert(`Error loading section. Please try again, if the problem perisides please contact support.
+             //      Error Details: ${error}`);
         });
 }
 

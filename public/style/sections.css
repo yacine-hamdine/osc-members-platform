@@ -58,7 +58,8 @@
                           "pfp points points"
                           "department department department"
                           "position position position"
-                          "roles roles roles";
+                          "roles roles roles"
+                          "putBtn putBtn putBtn";
     gap: 0.625rem;
     width: 100%;
     max-width: 450px;
@@ -99,4 +100,8 @@
 
 .container .content .profile #roles{
     grid-area: roles;
+}
+
+.container .content .profile #putPfbtn{
+    grid-area: putBtn;
 }
