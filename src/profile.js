@@ -40,6 +40,9 @@ function showProfile(user, profile) {
         .then((url) => {
             document.querySelectorAll('#pfp img').forEach(img => {
                 img.src = url;
+                
+                // set photoURL in Local Storage User Object
+                localStorage.setItem('user', JSON.stringify({ ...user, photoURL: url }));
             });
         })
         .catch((error) => {
