@@ -35,7 +35,7 @@ function accountPage(){
         // An error ocurred
             console.log(`An Error Occured, Please Try Again later.
             Error Details: ${error}`);
-            alert(`Error Re-Authenticating : ${error.message}`)
+            alert(`Error Re-Authenticating : ${error.message.replace("Firebase:", "").trim()}`)
         });
     })
 }
