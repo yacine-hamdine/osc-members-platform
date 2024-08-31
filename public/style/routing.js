@@ -28,7 +28,7 @@ function loadSection(sectionName){
                 profilePage();
             }
             else if(sectionName == "account"){
-                //accountPage();
+                accountPage();
             }
             else if(sectionName == "sudo"){
                 //sudoPage();

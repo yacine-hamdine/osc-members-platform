@@ -45,12 +45,6 @@
     display: grid;
 }
 
-@media screen and (min-width: 50px) and (max-width: 767px){
-    .header{
-        text-align: center;
-    }
-}
-
 /* profile section design */
 
 .container .content .profile{
@@ -104,4 +98,76 @@
 
 .container .content .profile #putPfbtn{
     grid-area: putBtn;
+}
+
+/* account section design */
+
+.container .content .account{
+    display: grid;
+    grid-template-areas: "email putEmail checkEmail"
+                         "password putPwd resetPwd"
+                         "note note note"
+                         "indication indication reAuth";
+    gap: 1.25rem;
+}
+
+.container .content .account > *, .container .content .account b{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: left;
+}
+
+.container .content .account #email{
+    grid-area: email;
+}
+
+.container .content .account #checkEmail{
+    grid-area: checkEmail;
+}
+
+.container .content .account #putEmail{
+    grid-area: putEmail;
+}
+
+
+.container .content .account #password{
+    grid-area: password;
+}
+
+.container .content .account #putPwd{
+    grid-area: putPwd;
+}
+
+.container .content .account #resetPwd{
+    grid-area: resetPwd;
+}
+
+.container .content .account #note{
+    grid-area: note;
+}
+
+.container .content .account #indication{
+    grid-area: indication;
+}
+
+.container .content .account #reAuth{
+    grid-area: reAuth;
+}
+
+.container .content .account .reAuthReq{
+    display: none;
+}
+
+@media screen and (min-width: 50px) and (max-width: 767px){
+    /*Mobile Device Screens*/
+
+    .account{
+        grid-template-areas: "email email"
+                             "checkEmail putEmail"
+                             "password password"
+                             "putPwd resetPwd"
+                             "note note"
+                             "indication indication"
+                             "reAuth reAuth" !important;
+    }
 }

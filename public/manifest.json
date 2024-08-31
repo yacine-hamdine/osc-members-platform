@@ -1,0 +1,13 @@
+{   
+    "name": "Open Source Club Members Platform",
+    "short_name": "OSC Members Platform", 
+    "description": "The Main Platform for Open Source Club Members", 
+    "start_url": "./index.html", 
+    "display": "standalone", 
+    "background_color": "#ffffff", 
+    "theme_color": "#3498db", 
+    "icons": [ { "src": "./assets/icon-192x192.png", "sizes": "192x192", "type": "image/png" }, { "src": "./assets/icon-512x512.png", "sizes": "512x512", "type": "image/png" } ], 
+    "lang": "en", 
+    "dir": "ltr", 
+    "orientation": "portrait" 
+}

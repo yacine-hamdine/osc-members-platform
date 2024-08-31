@@ -122,7 +122,6 @@ body{
 button{
     border-radius:  var(--el-borderRadius);
     width: 100%;
-    /*max-width: 12.5rem;*/
     height: 2.1875rem; 
     cursor: pointer;
     font-weight: bold;
@@ -130,11 +129,14 @@ button{
     padding: 0 1.25rem;
 }
 
+button:not(#logoutBtn){
+    max-width: 12.5rem;
+}
+
 button:disabled{
     cursor: not-allowed;
     opacity: 0.5;
     pointer-events: none;
-    
 }
 
 .main-btn{
@@ -160,11 +162,15 @@ button:hover{
 }
 
 .success{
-    color: rgb(4, 255, 4);
+    color: rgb(0, 197, 0);
 }
 
 .error{
     color: red;
+}
+
+.note{
+    color: #ff6f00;
 }
 
 input{

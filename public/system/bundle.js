@@ -60,6 +60,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/account.js":
+/*!************************!*\
+  !*** ./src/account.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var firebase_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! firebase/auth */ \"./node_modules/firebase/auth/dist/esm/index.esm.js\");\n\r\n\r\nfunction accountPage(){\r\n    const auth = (0,firebase_auth__WEBPACK_IMPORTED_MODULE_0__.getAuth)();\r\n    const user = auth.currentUser;\r\n\r\n    document.querySelector(\".account #email b\").innerHTML = user.email;\r\n\r\n    document.querySelector(\".account #reAuthBtn\").addEventListener(\"click\", async () => {\r\n\r\n        let promptForCredentials = new Promise((resolve, reject) => {\r\n            try{\r\n                let email = prompt(\"Please enter your email :\");\r\n                let pass = prompt(\"Please enter your password :\");\r\n                resolve(firebase_auth__WEBPACK_IMPORTED_MODULE_0__.EmailAuthProvider.credential(email, pass));\r\n            }\r\n            catch(err){\r\n                reject(err);\r\n            }\r\n        });\r\n\r\n        // TODO(you): prompt the user to re-provide their sign-in credentials\r\n        const credential = await promptForCredentials;\r\n\r\n        (0,firebase_auth__WEBPACK_IMPORTED_MODULE_0__.reauthenticateWithCredential)(user, credential).then(() => {\r\n        // User re-authenticated.\r\n            alert(\"Re-Authenticated Successfully !\");\r\n            document.querySelectorAll(\".reAuthReq\").forEach((btn) => {\r\n                btn.style.display = \"inline-block\";\r\n            });\r\n            document.querySelector(\".account #note\").innerText = \"Re-Authenticated Successfully !\";\r\n            document.querySelector(\".account #note\").classList.toggle(\"note\");\r\n            document.querySelector(\".account #note\").classList.toggle(\"success\");\r\n        }).catch((error) => {\r\n        // An error ocurred\r\n            console.log(`An Error Occured, Please Try Again later.\r\n            Error Details: ${error}`);\r\n            alert(`Error Re-Authenticating : ${error.message}`)\r\n        });\r\n    })\r\n}\r\n\r\nwindow.accountPage = accountPage;\n\n//# sourceURL=webpack:///./src/account.js?");
+
+/***/ }),
+
 /***/ "./src/auth.js":
 /*!*********************!*\
   !*** ./src/auth.js ***!
@@ -314,7 +324,8 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
 /******/ 	__webpack_require__("./src/firebase.js");
 /******/ 	__webpack_require__("./src/auth.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/profile.js");
+/******/ 	__webpack_require__("./src/profile.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/account.js");
 /******/ 	
 /******/ })()
 ;
