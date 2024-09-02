@@ -155,7 +155,7 @@
 }
 
 .container .content .account .reAuthReq{
-    display: none;
+    
 }
 
 @media screen and (min-width: 50px) and (max-width: 767px){
@@ -163,7 +163,7 @@
 
     .account{
         grid-template-areas: "email email"
-                             "checkEmail putEmail"
+                             "putEmail checkEmail"
                              "password password"
                              "putPwd resetPwd"
                              "note note"

@@ -8,7 +8,15 @@
   <meta name="author" content="Your Name">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
-  <link rel="manifest" href="manifest.json">
+
+  <link rel="manifest" href="manifest-l.json" id="manifest-link">
+  <script>
+    let manifestLink = document.getElementById('manifest-link');
+    let darkThemeMt = window.matchMedia("(prefers-color-scheme: dark)");
+    if(darkThemeMt.matches){
+      manifestLink.href = 'manifest-d.json';
+    }
+  </script>
 
   <title>Members Platform - Open Source Club</title>
 

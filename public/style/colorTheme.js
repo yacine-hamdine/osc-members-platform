@@ -1,4 +1,4 @@
-const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+let darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 
 let r = document.querySelector(":root");
 
