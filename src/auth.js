@@ -1,25 +1,37 @@
 // Import necessary Firebase modules
 import { app } from './firebase.js';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import { getProfile } from "./profile.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 // Initialize Firebase Authentication
 const auth = getAuth();
 const authPanel = document.getElementById("auth");
 
 // Check user authentication state and display the appropriate UI
-(async function checkAuth() {
+(async function checkAuth(){
     const promise = new Promise(resolve => {
         onAuthStateChanged(auth, (user) => {
-            if (user) {
+            if(user){
+
+                // Remove Auth Panel
                 authPanel.style.display = "none";
+
+                // Get photo url
+                const storage = getStorage(app);
+                const storageRef = ref(storage, user.photoURL);
+                getDownloadURL(storageRef)
+                    .then((url) => {
+                        user.photoURL = url;
+                    })
+                    .catch((error) => {
+                        console.error('Error getting profile picture URL:', error);
+                    });
+
+                
+                // get Profile Doc
                 getProfile(user);
 
-                // Save user data to Local Storage
-                localStorage.setItem('user', JSON.stringify(user));
-            } else {
+            }else{
                 authPanel.style.display = "flex";
             }
             resolve();
@@ -29,6 +41,7 @@ const authPanel = document.getElementById("auth");
     // Remove Load Screen
     await promise;
     document.querySelector("#loading").style.display = "none";
+
 })();
 
 // Handle user login
@@ -42,9 +55,6 @@ function login() {
             message.classList.remove('error');
             message.classList.add('success');
             message.innerHTML = "Login successful!";
-
-            // Save user data to Local Storage
-            localStorage.setItem('user', JSON.stringify(userCredential.user));
         })
         .catch((error) => {
             console.log(error);
@@ -56,7 +66,6 @@ function login() {
 
 document.getElementById('loginBtn').addEventListener('click', login);
 
-// Handle user logout
 function logout() {
     signOut(auth)
         .then(() => {
@@ -70,55 +79,3 @@ function logout() {
 }
 
 document.getElementById('logoutBtn').addEventListener('click', logout);
-
-// Update user profile and upload profile picture
-async function updatePf() {
-    const storage = getStorage(app);
-    const file = document.querySelector(".content-1 > div#pfp input").files[0];
-
-    if (file && auth.currentUser) {
-        try {
-            const storageRef = ref(storage, `usersProfilPictures/${auth.currentUser.uid}.jpg`);
-            await uploadBytes(storageRef, file);
-
-            const photoURL = await getDownloadURL(storageRef);
-            await updateProfile(auth.currentUser, { photoURL });
-
-            alert('Photo uploaded and profile updated successfully!');
-        } catch (error) {
-            console.error('Error uploading photo:', error);
-            alert('Failed to upload photo and update profile.');
-            return;
-        }
-    } else {
-        alert('No file selected or user not authenticated.');
-        return;
-    }
-
-    // Update display name in Firebase Authentication
-    const displayName = document.querySelector(".content .profile #displayName b").innerText;
-    try {
-        await updateProfile(auth.currentUser, { displayName });
-        console.log("Profile updated successfully");
-    } catch (error) {
-        console.error("Failed to update profile:", error);
-        return;
-    }
-
-    // Update user document in Firestore
-    try {
-        const db = getFirestore(app);
-        const userDocRef = doc(db, 'users', auth.currentUser.uid);
-        await updateDoc(userDocRef, { displayName });
-        console.log('Firestore document updated successfully');
-    } catch (error) {
-        console.error('Error updating Firestore document:', error);
-    }
-
-    // Update Local Storage
-    let lc = JSON.parse(localStorage.getItem('profile')) || {};
-    lc.displayName = displayName;
-    localStorage.setItem('profile', JSON.stringify(lc));
-}
-
-window.updatePf = updatePf;

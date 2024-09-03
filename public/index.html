@@ -8,13 +8,16 @@
   <meta name="author" content="Your Name">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
+  <meta name="theme-color" content="#dc8fff" id="theme-color">
 
   <link rel="manifest" href="manifest-l.json" id="manifest-link">
   <script>
     let manifestLink = document.getElementById('manifest-link');
+    let themeColorMeta = document.getElementById('theme-color');
     let darkThemeMt = window.matchMedia("(prefers-color-scheme: dark)");
     if(darkThemeMt.matches){
       manifestLink.href = 'manifest-d.json';
+      themeColorMeta.content = '#470068'
     }
   </script>
 

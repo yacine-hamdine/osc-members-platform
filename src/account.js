@@ -1,4 +1,4 @@
-import { getAuth, EmailAuthProvider, sendEmailVerification, updateEmail, reauthenticateWithCredential } from "firebase/auth";
+import { getAuth, EmailAuthProvider, sendEmailVerification, updateEmail, updatePassword, sendPasswordResetEmail, reauthenticateWithCredential, validatePassword } from "firebase/auth";
 
 
 function verifyEmail(user){
@@ -9,41 +9,95 @@ function verifyEmail(user){
 }
 
 function putEmail(user){
-
-    
-
-    if (user) {
-
+    if(user){
         let newEmail = prompt("Enter Your New Email : ");
-
-        if (newEmail && newEmail !== user.email) {
-          // Check if the current email is verified
-          if (user.isEmailVerified) {
+        if(newEmail && newEmail !== user.email){
             updateEmail(user, newEmail)
-              .then(() => {
-                // Email updated successfully
+            .then(() => {
+                   // Email updated successfully
                 alert("Email updated successfully!");
-              })
-              .catch((error) => {
+            })
+            .catch((error) => {
                 // An error occurred
                 alert("Error updating email: " + error.message);
-              });
-          } else {
-            // Send verification email
-            sendEmailVerification(user)
-              .then(() => {
-                alert("Verification email sent. Please check your inbox.");
-              })
-              .catch((error) => {
-                // An error occurred
-                alert("Error sending verification email: " + error.message);
-              });
-          }
-        } else {
-          alert("Please enter a valid new email address.");
+            });
+        }else{
+            alert("Please enter a valid new email address.");
         }
-      }
+    }
 }
+
+function validPass(pass){
+    return /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(pass);
+}
+
+function putPass(user){
+    if(user){
+        let newPass = prompt("Enter Your New Password : ");
+        if(newPass && validPass(newPass)){
+            updatePassword(user, newPass).then(() => {
+                alert("Email updated successfully!");
+            }).catch((error) => {
+                alert("Error updating password: " + error.message);
+            });
+        }else{
+            alert("Please enter a valid new password, it must be at leaast 8 characters long and contains a number and a capital letter.");
+        }
+    }
+}
+
+function resetPass(auth){
+    if(auth){
+        sendPasswordResetEmail(auth, auth.currentUser.email)
+        .then(() => {
+            alert(`Password reset link sent to ${auth.currentUser.email}.`)
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert(`Error reseting password : 
+                Error code : ${errorCode}
+                Error message : ${errorMessage}`);
+        });
+    }
+}
+
+async function reAuth(user){
+
+    let promptForCredentials = new Promise((resolve, reject) => {
+        try{
+            let email = prompt("Please enter your email :");
+            let pass = prompt("Please enter your password :");
+            resolve(EmailAuthProvider.credential(email, pass));
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+
+    const credential = await promptForCredentials;
+
+    if(credential){
+        reauthenticateWithCredential(user, credential)
+        .then(() => {
+            // User re-authenticated.
+            alert("Re-Authenticated Successfully !");
+            document.querySelectorAll(".reAuthReq").forEach((btn) => {
+                btn.style.display = "inline-block";
+            });
+            document.querySelector(".account #note").innerText = "Re-Authenticated Successfully !";
+            document.querySelector(".account #note").classList.toggle("note");
+            document.querySelector(".account #note").classList.toggle("success");
+        })
+        .catch((error) => {
+            // An error ocurred
+            console.log(`An Error Occured, Please Try Again later.
+            Error Details: ${error}`);
+            alert(`Error Re-Authenticating : ${error.message.replace("Firebase:", "").trim()}`)
+        });
+    }
+}
+
 function accountPage(){
 
     // Getting User Infos
@@ -55,56 +109,38 @@ function accountPage(){
     // Email Settings
 
     document.querySelector(".account #email b").innerHTML = user.email;
+
     if(user.emailVerified){
         document.querySelector(".account").removeChild(document.querySelector(".account #checkEmail"));
         document.querySelector(".account #email").innerHTML += "<span>&#9989;</span>";
     }
     else{
         document.querySelector(".account #verifyEmailBtn").addEventListener("click", () => {
-            verifyEmail(user);
-        })
+            verifyEmail(user)
+        });
     }
+
     document.querySelector(".account #putEmailBtn").addEventListener("click", () => {
-        putEmail(user);
+        putEmail(user)
+    });
+
+
+    // Password Settings
+
+    document.querySelector(".account #putPwdlBtn").addEventListener("click", () => {
+        putPass(user)
+    });
+
+    document.querySelector(".account #resetPwdBtn").addEventListener("click", () => {
+        resetPass(auth)
     });
 
 
     // ReAuth Settings
 
-    document.querySelector(".account #reAuthBtn").addEventListener("click", async () => {
-
-        let promptForCredentials = new Promise((resolve, reject) => {
-            try{
-                let email = prompt("Please enter your email :");
-                let pass = prompt("Please enter your password :");
-                resolve(EmailAuthProvider.credential(email, pass));
-            }
-            catch(err){
-                reject(err);
-            }
-        });
-
-        // TODO(you): prompt the user to re-provide their sign-in credentials
-        const credential = await promptForCredentials;
-
-        if(credential){
-            reauthenticateWithCredential(user, credential).then(() => {
-                // User re-authenticated.
-                    alert("Re-Authenticated Successfully !");
-                    document.querySelectorAll(".reAuthReq").forEach((btn) => {
-                        btn.style.display = "inline-block";
-                    });
-                    document.querySelector(".account #note").innerText = "Re-Authenticated Successfully !";
-                    document.querySelector(".account #note").classList.toggle("note");
-                    document.querySelector(".account #note").classList.toggle("success");
-                }).catch((error) => {
-                // An error ocurred
-                    console.log(`An Error Occured, Please Try Again later.
-                    Error Details: ${error}`);
-                    alert(`Error Re-Authenticating : ${error.message.replace("Firebase:", "").trim()}`)
-                });
-        }
-    })
+    document.querySelector(".account #reAuthBtn").addEventListener("click", () => {
+        reAuth(user)
+    });
 }
 
 window.accountPage = accountPage;
