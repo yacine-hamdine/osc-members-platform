@@ -14,15 +14,16 @@ function putEmail(user){
         if(newEmail && newEmail !== user.email){
             updateEmail(user, newEmail)
             .then(() => {
-                   // Email updated successfully
-                alert("Email updated successfully!");
+                // Email updated successfully
+                _alert("success", "Success", "Email updated successfully!");
             })
             .catch((error) => {
                 // An error occurred
-                alert("Error updating email: " + error.message);
+                console.error(error.message)
+                _alert("error", "Error", "Error updating email, try again.");
             });
         }else{
-            alert("Please enter a valid new email address.");
+            _alert("error", "Invalide Email", "Please enter a valid new email address.");
         }
     }
 }
@@ -36,12 +37,13 @@ function putPass(user){
         let newPass = prompt("Enter Your New Password : ");
         if(newPass && validPass(newPass)){
             updatePassword(user, newPass).then(() => {
-                alert("Email updated successfully!");
+                _alert("success", "Success", "Email updated successfully!");
             }).catch((error) => {
-                alert("Error updating password: " + error.message);
+                console.error(error.message);
+                _alert("error", "Error", "Error updating password.");
             });
         }else{
-            alert("Please enter a valid new password, it must be at leaast 8 characters long and contains a number and a capital letter.");
+            _alert("error", "Weak Password", "Your password must be at leaast 8 characters long and contains a number and a capital letter.");
         }
     }
 }
@@ -50,14 +52,15 @@ function resetPass(auth){
     if(auth){
         sendPasswordResetEmail(auth, auth.currentUser.email)
         .then(() => {
-            alert(`Password reset link sent to ${auth.currentUser.email}.`)
+            _alert("", "Check You Email", `Password reset link sent to ${auth.currentUser.email}.`)
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert(`Error reseting password : 
+            console.error(`Error reseting password : 
                 Error code : ${errorCode}
                 Error message : ${errorMessage}`);
+            _alert("error", "Error Updting Password", errorMessage.replace("Firebase;", "").trim());
         });
     }
 }
@@ -81,7 +84,7 @@ async function reAuth(user){
         reauthenticateWithCredential(user, credential)
         .then(() => {
             // User re-authenticated.
-            alert("Re-Authenticated Successfully !");
+            _alert("success", "Re-Authenticated Successfully", "You can now update you infos.");
             document.querySelectorAll(".reAuthReq").forEach((btn) => {
                 btn.style.display = "inline-block";
             });
@@ -93,7 +96,7 @@ async function reAuth(user){
             // An error ocurred
             console.log(`An Error Occured, Please Try Again later.
             Error Details: ${error}`);
-            alert(`Error Re-Authenticating : ${error.message.replace("Firebase:", "").trim()}`)
+            _alert("error", "Error Re-Authenticating",  error.message.replace("Firebase:", "").trim());
         });
     }
 }
