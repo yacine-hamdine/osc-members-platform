@@ -81,9 +81,9 @@ function updatePhoto(event) {
                 );
 
                 // Convert the canvas content to a Blob
-                canvas.toBlob(function(blob) {
-                    if (blob) {
-                        if (blob.size <= 10 * 1024 * 1024) { // 10MB limit
+                canvas.toBlob(function(blob){
+                    if(blob){
+                        if(blob.size <= 10 * 1024 * 1024){ // 10MB limit
                             const imgPreview = document.querySelector(".content-1 > div#pfp img");
                             imgPreview.src = URL.createObjectURL(blob);
                             imgPreview.style.display = 'block';
@@ -91,10 +91,10 @@ function updatePhoto(event) {
 
                             // Store the blob for later use in the upload function
                             blobPhoto = blob;
-                        } else {
-                            alert('The resized image exceeds 10MB.');
+                        }else{
+                            _alert("error", "Error Uploading Photo", "The resized image exceeds 10MB.");
                         }
-                    } else {
+                    }else{
                         console.error('Failed to create blob from canvas.');
                     }
                 }, 'image/jpeg');
@@ -111,7 +111,7 @@ function updatePhoto(event) {
         document.querySelector("#updatePfBtn").style.visibility = "visible";
 
     } else {
-        alert('Please select an image file.');
+        _alert("error", "Incorrect image format", 'Please select an image file.');
     }
 }
 
@@ -121,7 +121,55 @@ async function putProfile(user) {
     const storage = getStorage(app);
     const file = blobPhoto;
 
-    if(user && (file !== null || displayName != user.displayName)){
+    if(user){
+        if(file !== null || displayName != user.displayName){
+            if(file != null){
+                try{
+                    const storageRef = ref(storage, `usersProfilePictures/${user.uid}.jpg`);
+                    await uploadBytes(storageRef, file);
+        
+                    const photoURL = await getDownloadURL(storageRef);
+                    await updateProfile(user, { photoURL });
+        
+                }catch(error){
+                    console.error('Error uploading photo:', error);
+                    _alert("error", "Photo Upload Error", 'Failed to upload photo.');
+                    return;
+                }
+            }
+            if(displayName != user.displayName){
+                // Update display name in Firebase Authentication
+                try {
+                    await updateProfile(user, { displayName });
+                    console.log("Profile updated successfully");
+                } catch (error) {
+                    console.error("Failed to update profile:", error);
+                    _alert("error", "Error Updating Profile", 'Failed to update display name.');
+                    return;
+                }
+                // Update user document in Firestore
+                try {
+                    const db = getFirestore(app);
+                    const userDocRef = doc(db, 'users', user.uid);
+                    await updateDoc(userDocRef, { displayName });
+                    console.log('User doc updated successfully');
+                } catch (error) {
+                    console.error('Error updating Firestore document:', error);
+                    _alert("error", "Error Updating Profile", 'Failed to update display name.');
+                    return;
+                }
+            }
+            _alert("success", "Success", 'Profile updated successfully!');
+        }else{
+            _alert("error", "Error", "Please provide new data to update your profile.")
+            return;
+        }
+    }else{
+        _alert("error", "Error", "User not authenticated.");
+        return;
+    }
+
+    /*if(user && (file != null || displayName != user.displayName)){
         try{
             const storageRef = ref(storage, `usersProfilePictures/${user.uid}.jpg`);
             await uploadBytes(storageRef, file);
@@ -129,11 +177,11 @@ async function putProfile(user) {
             const photoURL = await getDownloadURL(storageRef);
             await updateProfile(user, { photoURL });
 
-            alert('Profile updated successfully!');
+            _alert("success", "Success", 'Profile updated successfully!');
 
         }catch(error){
             console.error('Error uploading photo:', error);
-            alert('Failed to upload update photo.');
+            _alert("error", "Photo Upload Error", 'Failed to upload photo.');
             return;
         }
 
@@ -143,7 +191,7 @@ async function putProfile(user) {
             console.log("Profile updated successfully");
         } catch (error) {
             console.error("Failed to update profile:", error);
-            alert('Failed to update display name.');
+            _alert("error", "Error Updating Profile", 'Failed to update display name.');
             return;
         }
 
@@ -155,14 +203,15 @@ async function putProfile(user) {
             console.log('User doc updated successfully');
         } catch (error) {
             console.error('Error updating Firestore document:', error);
-            alert('Failed to update display name.');
+            _alert("error", "Error Updating Profile", 'Failed to update display name.');
             return;
         }
 
     }else{
-        alert('No new data provided or user not authenticated.');
+        //alert('No new data provided or user not authenticated.');
+        _alert("error", "Error", "Please provide new data to update your profile.")
         return;
-    }
+    }*/
 
     // Update Local Storage
     let lc = JSON.parse(localStorage.getItem('profile')) || {};
@@ -172,12 +221,24 @@ async function putProfile(user) {
 
 function displayProfile(user, profile){
     // Display infos
-    document.querySelector(".content-1 > div#pfp img").setAttribute("src", user.photoURL);
-    profile.then(result => {
+
+        // Already set when showProfile() was called
+        //document.querySelector(".content-1 > div#pfp img").setAttribute("src", user.photoURL);
+
+
+        // Lokking for data in local storage for fast dislay otherwhise we read the db profile doc
+    try{
+        let pf = JSON.parse(localStorage.getItem("profile"));
         document.querySelectorAll(".content-1 > div:not(:first-of-type) > b").forEach(el => {
-            el.innerHTML = result[el.parentElement.id];
+            el.innerHTML = pf[el.parentElement.id];
         });
-    });
+    }catch{
+        profile.then(result => {
+            document.querySelectorAll(".content-1 > div:not(:first-of-type) > b").forEach(el => {
+                el.innerHTML = result[el.parentElement.id];
+            });
+        });
+    }
 
     // Update Pfp
     document.querySelector(".content-1 > div#pfp input").addEventListener('change', (event) => {

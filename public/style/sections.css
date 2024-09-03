@@ -49,6 +49,7 @@
 
 .container .content .profile{
     grid-template-areas:  "pfp displayName displayName"
+                          "pfp displayName displayName"
                           "pfp points points"
                           "department department department"
                           "position position position"
@@ -67,7 +68,10 @@
 
 .container .content .profile #pfp{
     grid-area: pfp;
-    width: 50px;
+    width: 95px;
+    height: 95px;
+    background-color: var(--title-color);
+    border-radius: 50%;
 }
 
 .container .content .profile #pfp img{

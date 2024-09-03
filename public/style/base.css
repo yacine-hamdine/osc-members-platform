@@ -90,6 +90,16 @@
     100%{box-shadow: 20px 0 #F7390C,-20px 0 #FF7C00; background: #E2FF00 }
 }
 
+@keyframes popdown{
+    0% {opacity: 0; transform: translate(-50%, -100px);}
+    100% {opacity: 1; transform: translateY(-50%, 0)}
+}
+
+@keyframes popup{
+    0% {opacity: 0; transform: translate(-50%, 100px);}
+    100% {opacity: 1; transform: translateY(-50%, 0)}
+}
+
 body{
     background-color: var(--bg-color);
     display: flex;
@@ -163,14 +173,17 @@ button:hover{
 
 .success{
     color: rgb(0, 197, 0);
+    fill: rgb(0, 197, 0);
 }
 
 .error{
     color: red;
+    fill: red;
 }
 
 .note{
     color: #ff6f00;
+    fill: #ff6f00;
 }
 
 input{
@@ -327,6 +340,9 @@ input::placeholder{
 #member #pfp{
     grid-area: pfp;
     overflow: hidden;
+    border-radius: 50%;
+    background-color: var(--title-color);
+    aspect-ratio: 1;
 }
 
 #member #displayName{
@@ -374,6 +390,32 @@ input::placeholder{
     width: calc(100% - 18.75rem);
     background-color: var(--bg-color);
     padding: 1.25rem 0.625rem;
+}
+
+dialog.alert{
+    z-index: 60;
+    min-width: 350px;
+    width: auto;
+    max-width: 700px;
+    position: fixed;
+    top: calc(100vh - 100px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--el-bg-color);
+    border: none;
+    border-radius: var(--box-borderRadius);
+    box-shadow: var(--box-shadow);
+    padding: 10px 5px;
+    animation: popup .1s linear;
+}
+
+dialog.alert > *{
+    width: 100%;
+}
+
+dialog.alert .type > *{
+    float: right;
+    padding-right: 5px;
 }
 
 @media screen and (min-width: 50px) and (max-width: 767px){
@@ -436,6 +478,11 @@ input::placeholder{
     #dynamic{
         width: 100%;
         height: calc(100% - 6.25rem);
+    }
+    dialog.alert{
+        top: 70px;
+        width: 90%;
+        animation: popdown .1s linear;
     }
 }
   

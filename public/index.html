@@ -3,29 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A platform for your club members">
-  <meta name="keywords" content="members, platform, community">
-  <meta name="author" content="Your Name">
+  <meta name="description" content="The official Open Source Club Members Platform">
+  <meta name="keywords" content="members, platform, community, open source club, osc, algeria, club, scientific, algiers, university, faculty, computer science; technology">
+  <meta name="author" content="Open Source Club">
   <meta name="robots" content="noindex, nofollow">
   <meta name="googlebot" content="noindex, nofollow">
-  <meta name="theme-color" content="#dc8fff" id="theme-color">
-
-  <link rel="manifest" href="manifest-l.json" id="manifest-link">
-  <script>
-    let manifestLink = document.getElementById('manifest-link');
-    let themeColorMeta = document.getElementById('theme-color');
-    let darkThemeMt = window.matchMedia("(prefers-color-scheme: dark)");
-    if(darkThemeMt.matches){
-      manifestLink.href = 'manifest-d.json';
-      themeColorMeta.content = '#470068'
-    }
-  </script>
-
+  <meta name="theme-color" content="#dc8fff">
+  <link rel="manifest" href="manifest.json">
   <title>Members Platform - Open Source Club</title>
-
   <link rel="shortcut icon" href="./media/logos/favicon.png" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="./style/base.css">
   <script src="./style/routing.js" defer></script>
+  <script src="./style/dialogs.js" defer></script>
   <link rel="stylesheet" type="text/css" href="./style/sections.css">
   <script type="module" src="./system/bundle.js"></script>
 </head>
@@ -153,6 +142,30 @@
   <div id="dynamic">
 
   </div>
+
+
+
+  <dialog class="alert">
+    <table>
+      <tr>
+        <td class="subtitle"></td>
+        <td class="type" rowspan="2"></td>
+      </tr>
+      <tr>
+        <td class="text"></td>
+      </tr>
+    </table>
+  </dialog>
+
+  <dialog class="prompt">
+
+  </dialog>
+
+  <dialog class="modal">
+
+  </dialog>
+
+
 
 </body>
 </html>
