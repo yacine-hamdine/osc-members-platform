@@ -23,7 +23,7 @@ function putEmail(user){
                 _alert("error", "Error", "Error updating email, try again.");
             });
         }else{
-            _alert("error", "Invalide Email", "Please enter a valid new email address.");
+            _alert("warn", "Invalid Email", "Please enter a valid new email address.");
         }
     }
 }
@@ -43,7 +43,7 @@ function putPass(user){
                 _alert("error", "Error", "Error updating password.");
             });
         }else{
-            _alert("error", "Weak Password", "Your password must be at leaast 8 characters long and contains a number and a capital letter.");
+            _alert("warn", "Weak Password", "Your password must be at leaast 8 characters long and contains a number and a capital letter.");
         }
     }
 }

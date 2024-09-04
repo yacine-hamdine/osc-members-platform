@@ -139,16 +139,16 @@ async function putProfile(user) {
             }
             if(displayName != user.displayName){
                 // Update display name in Firebase Authentication
-                try {
+                try{
                     await updateProfile(user, { displayName });
                     console.log("Profile updated successfully");
-                } catch (error) {
+                }catch (error){
                     console.error("Failed to update profile:", error);
                     _alert("error", "Error Updating Profile", 'Failed to update display name.');
                     return;
                 }
                 // Update user document in Firestore
-                try {
+                try{
                     const db = getFirestore(app);
                     const userDocRef = doc(db, 'users', user.uid);
                     await updateDoc(userDocRef, { displayName });
@@ -161,57 +161,14 @@ async function putProfile(user) {
             }
             _alert("success", "Success", 'Profile updated successfully!');
         }else{
-            _alert("error", "Error", "Please provide new data to update your profile.")
+            _alert("warn", "No New Data Detected", "Please provide new data to update your profile.");
+            document.querySelector("#updatePfBtn").style.visibility = "hidden";
             return;
         }
     }else{
         _alert("error", "Error", "User not authenticated.");
         return;
     }
-
-    /*if(user && (file != null || displayName != user.displayName)){
-        try{
-            const storageRef = ref(storage, `usersProfilePictures/${user.uid}.jpg`);
-            await uploadBytes(storageRef, file);
-
-            const photoURL = await getDownloadURL(storageRef);
-            await updateProfile(user, { photoURL });
-
-            _alert("success", "Success", 'Profile updated successfully!');
-
-        }catch(error){
-            console.error('Error uploading photo:', error);
-            _alert("error", "Photo Upload Error", 'Failed to upload photo.');
-            return;
-        }
-
-        // Update display name in Firebase Authentication
-        try {
-            await updateProfile(user, { displayName });
-            console.log("Profile updated successfully");
-        } catch (error) {
-            console.error("Failed to update profile:", error);
-            _alert("error", "Error Updating Profile", 'Failed to update display name.');
-            return;
-        }
-
-        // Update user document in Firestore
-        try {
-            const db = getFirestore(app);
-            const userDocRef = doc(db, 'users', user.uid);
-            await updateDoc(userDocRef, { displayName });
-            console.log('User doc updated successfully');
-        } catch (error) {
-            console.error('Error updating Firestore document:', error);
-            _alert("error", "Error Updating Profile", 'Failed to update display name.');
-            return;
-        }
-
-    }else{
-        //alert('No new data provided or user not authenticated.');
-        _alert("error", "Error", "Please provide new data to update your profile.")
-        return;
-    }*/
 
     // Update Local Storage
     let lc = JSON.parse(localStorage.getItem('profile')) || {};
@@ -221,10 +178,6 @@ async function putProfile(user) {
 
 function displayProfile(user, profile){
     // Display infos
-
-        // Already set when showProfile() was called
-        //document.querySelector(".content-1 > div#pfp img").setAttribute("src", user.photoURL);
-
 
         // Lokking for data in local storage for fast dislay otherwhise we read the db profile doc
     try{
@@ -246,7 +199,7 @@ function displayProfile(user, profile){
     })
 
     // Enable update button when data is edited by user
-    document.querySelector(".content #displayName b").addEventListener('keypress', () => {
+    document.querySelector(".content #displayName b").addEventListener('input', () => {
         document.querySelector("#updatePfBtn").style.visibility = "visible";
     })
 
