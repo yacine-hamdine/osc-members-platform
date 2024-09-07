@@ -423,6 +423,41 @@ dialog.alert .type > *{
     padding-right: 5px;
 }
 
+dialog.prompt{
+    z-index: 60;
+    min-width: 400px;
+    max-width: 700px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--el-bg-color);
+    border: none;
+    border-radius: var(--box-borderRadius);
+    box-shadow: var(--box-shadow);
+    padding: 10px 5px;
+}
+
+dialog.prompt > *{
+    width: 100%;
+}
+dialog.prompt form, dialog.prompt .inputs{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+dialog.prompt form, dialog.prompt .inputs input{
+    margin: 10px 0 20px 0;
+}
+
+dialog.prompt .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 0.625rem;
+}
+
 @media screen and (min-width: 50px) and (max-width: 767px){
     /*Mobile Device Screens*/
     #auth #login{
@@ -488,6 +523,10 @@ dialog.alert .type > *{
         top: 70px;
         width: 90%;
         animation: popdown .1s linear;
+    }
+    dialog.prompt{
+        min-width: 95%;
+        max-width: 95%;
     }
 }
   

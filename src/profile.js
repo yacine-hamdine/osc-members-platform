@@ -159,6 +159,10 @@ async function putProfile(user) {
                     return;
                 }
             }
+            document.querySelector("#displayName").innerHTML = user.displayName;
+            document.querySelectorAll('#pfp img').forEach(img => {
+                img.src = user.photoURL;
+            });
             _alert("success", "Success", 'Profile updated successfully!');
         }else{
             _alert("warn", "No New Data Detected", "Please provide new data to update your profile.");

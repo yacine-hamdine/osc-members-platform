@@ -68,7 +68,11 @@
 
 .container .content .profile #pfp{
     grid-area: pfp;
-    width: 95px;
+    width: 0;
+}
+
+.container .content .profile #pfp label{
+    min-width: 95px;
     height: 95px;
     background-color: var(--title-color);
     border-radius: 50%;

@@ -1,7 +1,24 @@
 // Import necessary Firebase modules
-import { app } from './firebase.js';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
+function checkConnectionStatus(){
+    if(!navigator.onLine){
+        _alert("error", "Connection Status", "You are offline.");
+    }
+}
+
+// Check the connection status on page load
+checkConnectionStatus();
+
+// Listen for connection status changes
+window.addEventListener('online', () => {
+    _alert("success", "Connection Restored", "You are back online.");
+});
+
+window.addEventListener('offline', () => {
+    _alert("error", "Connection Lost", "You are currently offline.");
+});
+
 
 // Initialize Firebase Authentication
 const auth = getAuth();
@@ -16,18 +33,6 @@ const authPanel = document.getElementById("auth");
                 // Remove Auth Panel
                 authPanel.style.display = "none";
 
-                // Get photo url
-                const storage = getStorage(app);
-                const storageRef = ref(storage, user.photoURL);
-                getDownloadURL(storageRef)
-                    .then((url) => {
-                        user.photoURL = url;
-                    })
-                    .catch((error) => {
-                        console.error('Error getting profile picture URL:', error);
-                    });
-
-                
                 // get Profile Doc
                 getProfile(user);
 
