@@ -4,90 +4,41 @@ function loadSection(sectionName){
     fetch(`./sections/${sectionName}.html`)
         .then(response => response.text())
         .then(html => {
-            
-            // Loading Correspondant HTML
+            // Load Corresponding HTML
             contentContainer.innerHTML = html;
 
-            // Loading Correspondant JS
-            if(sectionName == "home"){
-                //homePage();
-            }
-            else if(sectionName == "news"){
-                //newsPage();
-            }
-            else if(sectionName == "create"){
-                //createPage();
-            }
-            else if(sectionName == "activities"){
-                //activitiesPage();
-            }
-            else if(sectionName == "planner"){
-                //plannerPage();
-            }
-            else if(sectionName == "profile"){
-                profilePage();
-            }
-            else if(sectionName == "account"){
-                accountPage();
-            }
-            else if(sectionName == "sudo"){
-                //sudoPage();
+            // Load Corresponding JS Dynamically
+            const sectionScript = {
+                home: homePage,
+                news: newsPage,
+                create: createPage,
+                activities: activitiesPage,
+                planner: plannerPage,
+                profile: profilePage,
+                account: accountPage,
+                sudo: sudoPage,
+            };
+
+            if(sectionScript[sectionName]){
+                sectionScript[sectionName](); // Call the corresponding function if it exists
             }
 
-            // Applying Some Styles
+            // Apply Some Styles
             if(window.innerWidth < 787){
                 document.querySelector("#static").style.left = "-100%";
             }
-            document.querySelectorAll('.link').forEach( link => {
+            document.querySelectorAll('.link').forEach(link => {
                 link.classList.remove("active");
             });
             document.querySelector(`#${sectionName}`).classList.add("active");
 
-            localStorage.setItem('currentPage', sectionName);
+            localStorage.setItem('page', sectionName);
         })
         .catch(error => {
             console.error('Error loading template:', error);
-            //alert(`Error loading section. Please try again, if the problem perisides please contact support.
-             //      Error Details: ${error}`);
         });
 }
 
-function route(route){
-    switch(route){
-        case "home":
-            loadSection('home');
-            break;
-        case "news":
-            loadSection('news');
-            break;
-        case "create":
-            loadSection('create');
-            break;
-        case "activities":
-            loadSection('activities');
-            break;
-        case "planner":
-            loadSection('planner');
-            break;
-        case "profile":
-            loadSection('profile');
-            break;
-        case "account":
-            loadSection('account');
-            break;
-        case "sudo":
-            loadSection('sudo');
-            break;
-        default :
-            loadSection('home');
-    }
+window.route = function(route){
+    loadSection(route || 'home'); // Default to 'home' if no route is passed
 }
-
-document.querySelectorAll('.link').forEach( link => {
-    link.addEventListener('click', (event) => {
-        event.preventDefault();
-        route(link.id);
-    });
-});
-
-route('home');

@@ -116,9 +116,7 @@
 .container .content .account{
     display: grid;
     grid-template-areas: "email putEmail checkEmail"
-                         "password putPwd resetPwd"
-                         "note note note"
-                         "indication indication reAuth";
+                         "password putPwd resetPwd";
     gap: 1.25rem;
 }
 
@@ -152,36 +150,14 @@
 .container .content .account #resetPwd{
     grid-area: resetPwd;
 }
-
-.container .content .account #note{
-    grid-area: note;
-}
-
-.container .content .account #indication{
-    grid-area: indication;
-}
-
-.container .content .account #reAuth{
-    grid-area: reAuth;
-}
-
-.container .content .account .reAuthReq{
-    display: none;
-}
-
 @media screen and (min-width: 50px) and (max-width: 767px){
     /*Mobile Device Screens*/
 
     .account{
         grid-template-areas: "email email"
-                             "checkEmail checkEmail"
-                             "putEmail putEmail"
+                             "checkEmail putEmail"
                              "password password"
-                             "putPwd putPwd"
-                             "resetPwd resetPwd"
-                             "note note"
-                             "indication indication"
-                             "reAuth reAuth" !important;
+                             "resetPwd putPwd"!important;
     }
 
 }

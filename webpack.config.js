@@ -4,6 +4,7 @@ module.exports = {
     entry: [
         './src/firebase.js',
         './src/auth.js',
+        './src/main.js',
         './src/profile.js',
         './src/account.js'
     ],

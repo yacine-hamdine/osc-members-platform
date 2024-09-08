@@ -10,22 +10,28 @@ function verifyEmail(user){
 
 async function putEmail(user){
     if(user){
-        const field = {type: "email", name: "email", label: "Enter a new email", placeholder: "Email"};
+        const fields = [{type: "password", name: "currentPwd", label: "Enter Your Password", placeholder: "Password"}, {type: "email", name: "email", label: "Enter a new email", placeholder: "Email"}];
         try{
-            const newEmail = await _prompt("Change Email Address", field);
-            if(newEmail.email != "" && newEmail.email !== user.email){
-                updateEmail(user, newEmail.email)
-                .then(() => {
-                    // Email updated successfully
-                    _alert("success", "Success", "Email updated successfully!");
-                })
-                .catch((error) => {
-                    // An error occurred
-                    console.error(error.message)
-                    _alert("error", "Error", "Error updating email, try again.");
-                });
+            const newEmail = await _prompt("Change Email Address", fields);
+            const allowed = await reAuth(user, newEmail.currentPwd);
+            if(allowed){
+                if(newEmail.email != "" && newEmail.email !== user.email){
+                    updateEmail(user, newEmail.email)
+                    .then(() => {
+                        // Email updated successfully
+                        document.querySelector(".account #email b").innerHTML = newEmail.email;
+                        _alert("success", "Success", "Email updated successfully!");
+                    })
+                    .catch((error) => {
+                        // An error occurred
+                        console.error(error.message)
+                        _alert("error", "Error", "Error updating email, try again.");
+                    });
+                }else{
+                    _alert("warn", "Invalid Email", "Please enter a valid new email address.");
+                }
             }else{
-                _alert("warn", "Invalid Email", "Please enter a valid new email address.");
+                _alert("error", "Incorrect Password", "Try again !")
             }
         }catch(error){
             _alert("error", "Error", error);
@@ -40,17 +46,26 @@ function validPass(pass){
 
 async function putPass(user){
     if(user){
-        const field = {type: "password", name: "pwd", label: "Enter a new password", placeholder: "Password"}
-        let newPass = await _prompt("Change Your Password", field);
-        if(newPass.pwd && validPass(newPass.pwd)){
-            updatePassword(user, newPass.pwd).then(() => {
-                _alert("success", "Success", "Password updated successfully!");
-            }).catch((error) => {
-                console.error(error.message);
-                _alert("error", "Error", "Error updating password.");
-            });
+        const fields = [{type: "password", name: "currentPwd", label: "Enter Your Password", placeholder: "Password"}, {type: "password", name: "pwd", label: "Enter a new password", placeholder: "Password"}, {type: "password", name: "confirmPwd", label: "Confirm new password", placeholder: "Confirm Password"}]
+        const newPass = await _prompt("Change Your Password", fields);
+        const allowed = await reAuth(user, newPass.currentPwd);
+        if(allowed){
+            if(newPass.confirmPwd == newPass.pwd){
+                if(newPass.pwd && validPass(newPass.pwd)){
+                    updatePassword(user, newPass.pwd).then(() => {
+                        _alert("success", "Success", "Password updated successfully!");
+                    }).catch((error) => {
+                        console.error(error.message);
+                        _alert("error", "Error", "Error updating password.");
+                    });
+                }else{
+                    _alert("warn", "Weak Password", "Your password must be at leaast 8 characters long and contains a number and a capital letter.");
+                }
+            }else{
+                _alert("error", "Passwords Doesn't Match", "Make sure that your confirmation password matches.");
+            }
         }else{
-            _alert("warn", "Weak Password", "Your password must be at leaast 8 characters long and contains a number and a capital letter.");
+            _alert("error", "Incorrect Password", "Try again !")
         }
     }
 }
@@ -72,51 +87,27 @@ function resetPass(auth){
     }
 }
 
-async function reAuth(user){
-    try{
-        const fields = [
-            { type: "email", name: "email", label: "Enter your email", placeholder: "Email" },
-            { type: "password", name: "pwd", label: "Enter your password", placeholder: "Password" }
-        ];
-        
-        // Await the result of the _prompt function
-        const crd = await _prompt("Re-Authentication", fields);
 
-        if(!crd || !crd.email || !crd.pwd){
-            throw new Error("Credentials not provided.");
-        }
+async function reAuth(user, pwd){
+    try{
 
         // Create the credential object using Firebase EmailAuthProvider
-        const credential = EmailAuthProvider.credential(crd.email, crd.pwd);
+        const credential = EmailAuthProvider.credential(user.email, pwd);
 
         // Now reauthenticate the user using the credential
         await reauthenticateWithCredential(user, credential);
 
-        // User re-authenticated successfully
-        _alert("success", "Re-Authenticated Successfully", "You can now update your information.");
-        
-        // Show any buttons or elements that require re-authentication
-        document.querySelectorAll(".reAuthReq").forEach((btn) => {
-            btn.style.display = "inline-block";
-        });
+        return true;
 
-        // Update the account note
-        const noteElement = document.querySelector(".account #note");
-        noteElement.innerText = "Re-Authenticated Successfully!";
-        noteElement.classList.toggle("note");
-        noteElement.classList.toggle("success");
-
-        // Set event listeners for updating data after re-authentication
-        document.querySelector(".account #putEmailBtn").addEventListener("click", () => putEmail(user));
-        document.querySelector(".account #putPwdlBtn").addEventListener("click", () => putPass(user));
     }catch(error){
+
         // Handle errors
         console.error(`Error occurred during re-authentication: ${error.message}`);
-        _alert("error", "Error Re-Authenticating", error.message.replace("Firebase:", "").trim());
+        return false;
     }
 }
 
-function accountPage(){
+window.accountPage = function(){
 
     // Getting User Infos
 
@@ -136,19 +127,13 @@ function accountPage(){
         document.querySelector(".account #verifyEmailBtn").addEventListener("click", () => verifyEmail(user));
     }
 
-    /*document.querySelector(".account #putEmailBtn").addEventListener("click", () => putEmail(user));*/
+    document.querySelector(".account #putEmailBtn").addEventListener("click", () => putEmail(user));
 
 
     // Password Settings
 
-    /*document.querySelector(".account #putPwdlBtn").addEventListener("click", () => putPass(user));*/
+    document.querySelector(".account #putPwdlBtn").addEventListener("click", () => putPass(user));
 
     document.querySelector(".account #resetPwdBtn").addEventListener("click", () => resetPass(auth));
 
-
-    // ReAuth Settings
-
-    document.querySelector(".account #reAuthBtn").addEventListener("click", () => reAuth(user));
 }
-
-window.accountPage = accountPage;

@@ -92,7 +92,7 @@
 
 @keyframes popdown{
     0% {opacity: 0; transform: translate(-50%, -100px);}
-    100% {opacity: 1; transform: translateY(-50%, 0)}
+    100% {opacity: 1; transform: translate(-50%, 0)}
 }
 
 @keyframes popup{
@@ -161,6 +161,15 @@ button:disabled{
     border: var(--secondary-btn-border);
 }
 
+.main-icon-btn{
+    color: var(--main-btn-color);
+    background: var(--main-btn-bg);
+    border: var(--main-btn-border);
+    width: 35px;
+    padding: 0;
+    margin: 0 10px;
+}
+
 button:hover{
     --main-btn-bg: #5d00ba;
     --secondary-btn-color: #5d00ba;
@@ -210,6 +219,86 @@ input:focus{
 
 input::placeholder{
     color: #ffffff;
+}
+
+input[type="checkbox"]{
+    visibility: hidden;
+    display: none;
+}
+
+.checkbox-wrapper{
+    cursor: pointer;
+}
+
+.checkbox-wrapper .toggle{
+    position: relative;
+    display: block;
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transform: translate3d(0, 0, 0);
+}
+
+.checkbox-wrapper .toggle:before{
+    content: "";
+    position: relative;
+    top: 3px;
+    left: 3px;
+    width: 34px;
+    height: 14px;
+    display: block;
+    background: #9A9999;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.checkbox-wrapper .toggle span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    display: block;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(154, 153, 153, 0.5);
+    transition: all 0.2s ease;
+}
+
+.checkbox-wrapper .toggle span:before{
+    content: "";
+    position: absolute;
+    display: block;
+    margin: -18px;
+    width: 56px;
+    height: 56px;
+    background: var(--main-btn-bg);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+}
+
+.checkbox-wrapper input:checked + .toggle:before{
+    background: #E2FF00;
+}
+
+.checkbox-wrapper input:checked + .toggle span{
+    background: var(--main-btn-bg);
+    transform: translateX(20px);
+    transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
+    box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
+}
+
+.checkbox-wrapper input:checked + .toggle span:before{
+    transform: scale(1);
+    opacity: 0;
+    transition: all 0.4s ease;
+}
+
+.checkbox-wrapper:has(input[type="checkbox"]:disabled){
+    opacity: .7;
 }
 
 .icon{
@@ -395,6 +484,8 @@ input::placeholder{
     width: calc(100% - 18.75rem);
     background-color: var(--bg-color);
     padding: 1.25rem 0.625rem;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 dialog.alert{
@@ -420,7 +511,7 @@ dialog.alert > *{
 
 dialog.alert .type > *{
     float: right;
-    padding-right: 5px;
+    padding-left: 10px;
 }
 
 dialog.prompt{
@@ -436,6 +527,7 @@ dialog.prompt{
     border-radius: var(--box-borderRadius);
     box-shadow: var(--box-shadow);
     padding: 10px 5px;
+    animation: popup .1s linear;
 }
 
 dialog.prompt > *{
@@ -527,6 +619,10 @@ dialog.prompt .buttons{
     dialog.prompt{
         min-width: 95%;
         max-width: 95%;
+        top: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: popdown .1s linear;
     }
 }
   

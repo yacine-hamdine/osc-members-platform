@@ -5,34 +5,31 @@ import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 // Function to retrieve and display user profile data
-async function getProfile(user) {
+window.getProfile = async function(user){
     const db = getFirestore(app);
     const docRef = doc(db, "users", user.uid);
     
-    try {
+    try{
         const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
+        if (docSnap.exists()){
             const profileData = docSnap.data();
             showProfile(user, profileData);
 
-            // Save profile data to Local Storage
-            localStorage.setItem('profile', JSON.stringify(profileData));
+            // Save user data to Local Storage
+            localStorage.setItem('userData', JSON.stringify(profileData));
             return profileData;
 
-        } else {
+        }else{
             console.log("No such document!");
         }
-    }catch(error) {
+    }catch(error){
         console.error("Error getting document:", error);
     }
 }
 
-// Expose getProfile function globally
-window.getProfile = getProfile;
-
 
 // Function to display user profile in the UI
-function showProfile(user, profile) {
+function showProfile(user, profile){
     document.querySelector("#displayName").innerHTML = user.displayName;
     document.querySelector("#department").innerHTML = profile.department;
     document.querySelector("#position").innerHTML = profile.position;
@@ -44,13 +41,14 @@ function showProfile(user, profile) {
 
 let blobPhoto = null;
 
-function updatePhoto(event) {
+async function updatePhoto(event){
     const input = event.target;
-    if (input.files && input.files[0]) {
+    if(input.files && input.files[0]){
+
         const file = input.files[0];
         const reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function(e){
             const img = new Image();
             img.src = e.target.result;
 
@@ -100,7 +98,7 @@ function updatePhoto(event) {
                 }, 'image/jpeg');
             };
 
-            img.onerror = function() {
+            img.onerror = function(){
                 console.error('Failed to load the image.');
             };
         };
@@ -110,13 +108,19 @@ function updatePhoto(event) {
         // Enable the update button when the image is processed
         document.querySelector("#updatePfBtn").style.visibility = "visible";
 
-    } else {
+    }else{
         _alert("error", "Incorrect image format", 'Please select an image file.');
     }
 }
 
-async function putProfile(user) {
+let updateTimer;
+function debounceUpdateProfile(user){
+    clearTimeout(updateTimer);
+    updateTimer = setTimeout(() => putProfile(user), 1000); // Wait 1 second after the last input
+}
 
+async function putProfile(user){
+    
     const displayName = document.querySelector(".content .profile #displayName b").innerText;
     const storage = getStorage(app);
     const file = blobPhoto;
@@ -151,7 +155,7 @@ async function putProfile(user) {
                 try{
                     const db = getFirestore(app);
                     const userDocRef = doc(db, 'users', user.uid);
-                    await updateDoc(userDocRef, { displayName });
+                    await updateDoc(userDocRef, { displayName: displayName });
                     console.log('User doc updated successfully');
                 } catch (error) {
                     console.error('Error updating Firestore document:', error);
@@ -164,6 +168,14 @@ async function putProfile(user) {
                 img.src = user.photoURL;
             });
             _alert("success", "Success", 'Profile updated successfully!');
+
+            // Edit-UI Inzctive
+            document.querySelector("#updatePfBtn").style.visibility = "hidden";
+            document.querySelector(".content #displayName b").setAttribute("contenteditable", "false");
+            document.querySelector(".content #displayName b").style.border = "none";
+            document.querySelector(".content-1 > div#pfp img").style.border = "none"
+            document.querySelector(".content-1 > div#pfp input").setAttribute("disabled", "true");
+            document.querySelector("#editPfBtn").style.display = "inline-block";
         }else{
             _alert("warn", "No New Data Detected", "Please provide new data to update your profile.");
             document.querySelector("#updatePfBtn").style.visibility = "hidden";
@@ -175,17 +187,17 @@ async function putProfile(user) {
     }
 
     // Update Local Storage
-    let lc = JSON.parse(localStorage.getItem('profile')) || {};
+    let lc = JSON.parse(localStorage.getItem('userData')) || {};
     lc.displayName = displayName;
-    localStorage.setItem('profile', JSON.stringify(lc));
+    localStorage.setItem('userData', JSON.stringify(lc));
 }
 
 function displayProfile(user, profile){
     // Display infos
 
-        // Lokking for data in local storage for fast dislay otherwhise we read the db profile doc
+        // Looking for data in local storage for fast dislay otherwhise we read the db profile doc
     try{
-        let pf = JSON.parse(localStorage.getItem("profile"));
+        let pf = JSON.parse(localStorage.getItem("userData"));
         document.querySelectorAll(".content-1 > div:not(:first-of-type) > b").forEach(el => {
             el.innerHTML = pf[el.parentElement.id];
         });
@@ -199,29 +211,39 @@ function displayProfile(user, profile){
 
     // Update Pfp
     document.querySelector(".content-1 > div#pfp input").addEventListener('change', (event) => {
-        updatePhoto(event)
+        updatePhoto(event);
     })
 
     // Enable update button when data is edited by user
     document.querySelector(".content #displayName b").addEventListener('input', () => {
         document.querySelector("#updatePfBtn").style.visibility = "visible";
-    })
+        debounceUpdateProfile(user); // Use the debounce function
+    });
 
     // Add event listener to update profile button
     document.querySelector("#updatePfBtn").addEventListener("click", () => {
         putProfile(user)
     });
+
+    // Make Profile Editable When Clicking Edit Button
+    document.querySelector("#editPfBtn").addEventListener("click", () => {
+        // Edit-UI Active
+        document.querySelector(".content #displayName b").setAttribute("contenteditable", "true");
+        document.querySelector(".content #displayName b").style.border = "3px solid var(--main-btn-bg)";
+        document.querySelector(".content #displayName b").style.borderRadius = "50px";
+        document.querySelector(".content #displayName b").style.padding = "2px 3px";
+        document.querySelector(".content-1 > div#pfp img").style.border = "3px solid var(--main-btn-bg)"
+        document.querySelector(".content-1 > div#pfp input").removeAttribute("disabled");
+        document.querySelector("#editPfBtn").style.display = "none";
+    })
 }
 
-function profilePage(){
+window.profilePage = function(){
     const auth = getAuth();
     const user = auth.currentUser;
     const profile = getProfile(user);
 
-    if (user && profile) {
+    if(user && profile){
         displayProfile(user, profile);
     }
 }
-
-// Expose profilePage function globally
-window.profilePage = profilePage;
