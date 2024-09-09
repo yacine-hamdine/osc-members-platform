@@ -117,10 +117,28 @@
 /* account section design */
 
 .container .content .account{
-    display: grid;
-    grid-template-areas: "email putEmail checkEmail"
-                         "password putPwd resetPwd";
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
+}
+
+.container .content .account div{
+    width: 100%;
+}
+
+.container .content .account > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.container .content .account > div > div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.625rem;
 }
 
 .container .content .account > *, .container .content .account b{
@@ -129,38 +147,15 @@
     justify-content: left;
 }
 
-.container .content .account #email{
-    grid-area: email;
+.container .content .account button{
+    max-width: 100% !important;
 }
 
-.container .content .account #checkEmail{
-    grid-area: checkEmail;
-}
-
-.container .content .account #putEmail{
-    grid-area: putEmail;
-}
-
-
-.container .content .account #password{
-    grid-area: password;
-}
-
-.container .content .account #putPwd{
-    grid-area: putPwd;
-}
-
-.container .content .account #resetPwd{
-    grid-area: resetPwd;
-}
 @media screen and (min-width: 50px) and (max-width: 767px){
     /*Mobile Device Screens*/
 
-    .account{
-        grid-template-areas: "email email"
-                             "checkEmail putEmail"
-                             "password password"
-                             "resetPwd putPwd"!important;
-    }
+    .container .content .account > div{
+        flex-direction: column;
+    }    
 
 }
