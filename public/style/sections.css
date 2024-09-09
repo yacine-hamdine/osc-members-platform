@@ -76,6 +76,9 @@
     height: 95px;
     background-color: var(--title-color);
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container .content .profile #pfp img{

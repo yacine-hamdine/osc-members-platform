@@ -113,12 +113,6 @@ async function updatePhoto(event){
     }
 }
 
-let updateTimer;
-function debounceUpdateProfile(user){
-    clearTimeout(updateTimer);
-    updateTimer = setTimeout(() => putProfile(user), 1000); // Wait 1 second after the last input
-}
-
 async function putProfile(user){
     
     const displayName = document.querySelector(".content .profile #displayName b").innerText;
@@ -168,19 +162,20 @@ async function putProfile(user){
                 img.src = user.photoURL;
             });
             _alert("success", "Success", 'Profile updated successfully!');
-
-            // Edit-UI Inzctive
-            document.querySelector("#updatePfBtn").style.visibility = "hidden";
-            document.querySelector(".content #displayName b").setAttribute("contenteditable", "false");
-            document.querySelector(".content #displayName b").style.border = "none";
-            document.querySelector(".content-1 > div#pfp img").style.border = "none"
-            document.querySelector(".content-1 > div#pfp input").setAttribute("disabled", "true");
-            document.querySelector("#editPfBtn").style.display = "inline-block";
         }else{
             _alert("warn", "No New Data Detected", "Please provide new data to update your profile.");
             document.querySelector("#updatePfBtn").style.visibility = "hidden";
             return;
         }
+
+        // Edit-UI Inactive
+        document.querySelector("#updatePfBtn").style.visibility = "hidden";
+        document.querySelector(".content #displayName b").setAttribute("contenteditable", "false");
+        document.querySelector(".content #displayName b").style.border = "none";
+        document.querySelector(".content-1 > div#pfp img").style.border = "none"
+        document.querySelector(".content-1 > div#pfp input").setAttribute("disabled", "true");
+        document.querySelector("#editPfBtn").style.display = "inline-block";
+        
     }else{
         _alert("error", "Error", "User not authenticated.");
         return;
@@ -217,7 +212,6 @@ function displayProfile(user, profile){
     // Enable update button when data is edited by user
     document.querySelector(".content #displayName b").addEventListener('input', () => {
         document.querySelector("#updatePfBtn").style.visibility = "visible";
-        debounceUpdateProfile(user); // Use the debounce function
     });
 
     // Add event listener to update profile button

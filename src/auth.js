@@ -102,6 +102,10 @@ async function launch(user, newSession){
             // Connect Session
             await setSession(user);
         }
+
+        // Detect New Device login
+        newSessionDetector(user);
+
         // Remove Load Screen
         document.querySelector("#loading").style.display = "none";
         
@@ -136,8 +140,6 @@ async function setSession(user){
         // Update the session in Firestore
         await updateDoc(userDocRef, { session: sessionData });
 
-        // Detect New Device login
-        newSessionDetector(user);
     }catch(error){
         console.error("Error setting session: ", error);
     }
@@ -146,16 +148,17 @@ async function setSession(user){
 function newSessionDetector(user){
     const db = getFirestore(app);
     const userDocRef = doc(db, "users", user.uid);
+    let initialLoad = true; // Flag to track initial load
 
     // Set up a listener for changes to the user's document
     onSnapshot(userDocRef, (docSnapshot) => {
         if(docSnapshot.exists()){
             const data = docSnapshot.data();
-
-            // Check if 'session' and 'session.id' exist
-            if(data.session && data.session.id){
-                if(data.session.id != user.stsTokenManager.refreshToken){
-                    logout(`You've just logged in on another device: ${data.session.device}. You can login to one device at a time only.`);
+            if(initialLoad){
+                initialLoad = false; // Set flag to false after initial snapshot
+            }else{
+                if(data.session && data.session.id !== user.stsTokenManager.refreshToken){
+                    logout(`You've just logged in on another device: ${data.session.device}. You can log in to one device at a time only.`);
                 }
             }
         }else{
@@ -165,6 +168,7 @@ function newSessionDetector(user){
         console.error("Error listening for session changes: ", error);
     });
 }
+
 
 function login(){
     const email = document.getElementById("email").value;
