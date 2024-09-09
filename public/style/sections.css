@@ -147,15 +147,15 @@
     justify-content: left;
 }
 
-.container .content .account button{
-    max-width: 100% !important;
-}
-
 @media screen and (min-width: 50px) and (max-width: 767px){
     /*Mobile Device Screens*/
 
     .container .content .account > div{
         flex-direction: column;
     }    
+
+    .container .content .account button{
+        max-width: 100% !important;
+    }
 
 }
