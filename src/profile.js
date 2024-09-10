@@ -12,7 +12,7 @@ window.getProfile = async function(user) {
     // Try fetching from Local Storage first to reduce Firestore reads
     const cachedProfile = localStorage.getItem('userData');
     
-    if (cachedProfile) {
+    if (cachedProfile &&  user.displayName == JSON.parse(cachedProfile).displayName) {
         console.log('Using cached profile data');
         const profileData = JSON.parse(cachedProfile);
         showProfile(user, profileData);
