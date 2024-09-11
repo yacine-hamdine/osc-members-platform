@@ -18,14 +18,6 @@ window.sudoPage = function(){
     null;
 }
 
-if ('serviceWorker' in navigator && 'SyncManager' in window) {
-    navigator.serviceWorker.register('/service-worker.js').then(registration => {
-        console.log('Service Worker registered with scope:', registration.scope);
-    }).catch(error => {
-        console.log('Service Worker registration failed:', error);
-    });
-}
-
 
 window.main = function(args){
     document.querySelectorAll('.link').forEach( link => {
@@ -35,6 +27,14 @@ window.main = function(args){
         });
     });
     route(args.page);
+
+    if ('serviceWorker' in navigator && 'SyncManager' in window) {
+        navigator.serviceWorker.register('/public/service-worker.js').then(registration => {
+            console.log('Service Worker registered with scope:', registration.scope);
+        }).catch(error => {
+            console.log('Service Worker registration failed:', error);
+        });
+    }
 
     getProfile(args.user);
 }

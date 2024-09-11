@@ -1,4 +1,5 @@
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
@@ -15,5 +16,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'public/system'), // Output directory
         filename: '[name].bundle.js'
-    }
+    },
+    plugins: [
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: path.resolve(__dirname, 'public/system/serviceWorker.bundle.js'), to: '../service-worker.js' }
+            ]
+        })
+    ]
 };

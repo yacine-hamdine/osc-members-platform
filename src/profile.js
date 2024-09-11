@@ -39,10 +39,10 @@ window.getProfile = async function(user) {
 
 // Function to display user profile in the UI
 function showProfile(user, profile) {
-    document.querySelector("#displayName").innerHTML = user.displayName;
-    document.querySelector("#department").innerHTML = profile.department;
-    document.querySelector("#position").innerHTML = profile.position;
-    document.querySelector("#points").innerHTML = `${profile.points} OPs`;
+    document.querySelector("#displayName").textContent = user.displayName;
+    document.querySelector("#department").textContent = profile.department;
+    document.querySelector("#position").textContent = profile.position;
+    document.querySelector("#points").textContent = `${profile.points} OPs`;
 
     // Set the profile photo
     document.querySelectorAll('#pfp img').forEach(img => {
@@ -110,6 +110,11 @@ async function updatePhoto(event) {
     }
 }
 
+function validDisplayName(displayName) {
+    // Basic XSS Sanitization
+    return /^[^<>"='`]{3,25}$/gm.test(displayName);
+}
+
 // Optimized function to update user profile
 async function putProfile(user) {
     const displayName = document.querySelector(".content .profile #displayName b").innerText;
@@ -137,6 +142,12 @@ async function putProfile(user) {
             }
 
             if (displayName !== user.displayName) {
+
+                if (!validDisplayName(displayName)) {
+                    throw new Error("Invalid Name Provided");
+                    return;
+                }
+
                 await updateProfile(user, { displayName });
 
                 // Batch update to Firestore (display name update)
@@ -147,7 +158,7 @@ async function putProfile(user) {
             // Commit Firestore batch
             await batch.commit();
 
-            document.querySelector("#displayName").innerHTML = user.displayName;
+            document.querySelector("#displayName").textContent = user.displayName;
             document.querySelectorAll('#pfp img').forEach(img => {
                 img.src = user.photoURL;
             });
@@ -180,12 +191,12 @@ function displayProfile(user, profile) {
     try {
         let pf = JSON.parse(localStorage.getItem("userData"));
         document.querySelectorAll(".content-1 > div:not(:first-of-type) > b").forEach(el => {
-            el.innerHTML = pf[el.parentElement.id];
+            el.textContent = pf[el.parentElement.id];
         });
     } catch {
         profile.then(result => {
             document.querySelectorAll(".content-1 > div:not(:first-of-type) > b").forEach(el => {
-                el.innerHTML = result[el.parentElement.id];
+                el.textContent = result[el.parentElement.id];
             });
         });
     }

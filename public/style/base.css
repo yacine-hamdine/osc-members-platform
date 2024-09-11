@@ -71,9 +71,9 @@
     background-color: #1e002c;      
 }
 
-#loading img{
+#loading svg{
     width: 80%;
-    max-width: 300px;
+    max-width: 400px;
 }
 
 #loading #dots #loader{
