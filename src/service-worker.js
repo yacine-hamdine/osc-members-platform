@@ -12,7 +12,7 @@ async function checkSessionInBackground() {
     const user = await getUserFromLocalStorage();
     const db = getFirestore(app);
     const userDocRef = doc(db, "users", user.uid);
-
+    debugger
     // Set up the onSnapshot listener to detect session changes
     return new Promise((resolve, reject) => {
         onSnapshot(userDocRef, (docSnapshot) => {
@@ -31,7 +31,7 @@ async function checkSessionInBackground() {
             } else {
                 console.log("User document doesn't exist.");
             }
-            resolve();
+            resolve("Listening for session changes in the background");
         }, error => {
             console.error("Error listening for session changes in background:", error);
             reject(error);

@@ -54,33 +54,7 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-}
-
-#loading{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1.5625rem;
-    z-index: 100;
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
-    background-color: #1e002c;      
-}
-
-#loading svg{
-    width: 80%;
-    max-width: 400px;
-}
-
-#loading #dots #loader{
-    width: 15px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    animation: l5 1s infinite linear alternate;
+    transition: all ease-in-out .1s;
 }
 
 @keyframes l5{
@@ -127,6 +101,10 @@ body{
 
 .title, .subtitle, .text{
     padding: 0 0.625rem;
+}
+
+.c{
+    color: var(--title-color);
 }
 
 button{

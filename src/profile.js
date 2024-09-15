@@ -53,7 +53,7 @@ function showProfile(user, profile) {
 let blobPhoto = null;
 
 // Function to update the profile photo
-async function updatePhoto(event) {
+window.updatePhoto = async function(event) {
     const input = event.target;
     if (input.files && input.files[0]) {
         const file = input.files[0];
@@ -86,7 +86,7 @@ async function updatePhoto(event) {
                 canvas.toBlob(function(blob) {
                     if (blob) {
                         if (blob.size <= 10 * 1024 * 1024) {
-                            const imgPreview = document.querySelector(".content-1 > div#pfp img");
+                            const imgPreview = input.previousElementSibling.querySelector("img");
                             imgPreview.src = URL.createObjectURL(blob);
                             blobPhoto = blob;
                         } else {
@@ -105,6 +105,7 @@ async function updatePhoto(event) {
 
         reader.readAsDataURL(file);
         document.querySelector("#updatePfBtn").style.visibility = "visible";
+
     } else {
         _alert("error", "Incorrect image format", 'Please select an image file.');
     }

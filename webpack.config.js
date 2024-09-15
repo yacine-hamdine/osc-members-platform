@@ -8,7 +8,8 @@ module.exports = {
             './src/auth.js',
             './src/main.js',
             './src/profile.js',
-            './src/account.js'
+            './src/account.js',
+            './src/sudo.js'
         ],
         serviceWorker: './src/service-worker.js'
     },

@@ -14,11 +14,49 @@
     </div>
 
     <div class="content">
-        <div class="content-1 text">
+        <div class="content-1 roles text">
             Roles
         </div>
-        <div class="content-2 text">
-            Members
+        <div class="content-2 members text">
+            <div id="addMember">
+                <details>
+                    <summary class="subtitle main-btn">
+                        <span>Add New Member</span>
+                    </summary>
+                    <div>
+                        <form action="javascript">
+                            <div class="subtitle c">Account</div>
+                            <label class="subtitle" for="newMemberEmail">Email</label>
+                            <input type="email" name="newMemberEmail" placeholder="Email" id="newMemberEmail" required>
+                            <label class="subtitle" for="newMemberPassword">Password</label>
+                            <input type="password" name="newMemberPassword" placeholder="Password" id="newMemberPassword" required>
+                            <label class="subtitle" for="confirmNewMemberPassword">Confirm Password</label>
+                            <input type="password" name="confirmNewMemberPassword" placeholder="Password" id="confirmNewMemberPassword" >
+                            <div class="subtitle c">Profile</div>
+                            <label class="subtitle" for="newMemberName">Name</label>
+                            <input type="text" name="newMemberName" placeholder="Name" id="newMemberName" size="25">
+                            <div class="subtitle c">Membership</div>
+                            <label class="subtitle" for="newMemberDepartment">Department</label>
+                            <input type="text" name="newMemberDepartment" placeholder="Department" id="newMemberDepartment">
+                            <label class="subtitle" for="newMemberPosition">Position</label>
+                            <input type="text" name="newMemberPosition" placeholder="Position" id="newMemberPosition">
+                            <label class="subtitle" for="newMemberDepartment">Points</label>
+                            <input type="number" name="newMemberPoints" placeholder="Points" id="newMemberPoints">
+                            <label class="subtitle" for="newMemberRoles">Roles</label>
+                            <input type="text" name="newMemberRoles" placeholder="Core-Team, Events-Manager,..." id="newMemberRoles">
+                            <div class="subtitle c">Plateform-Privileges</div>
+                            <div class="f-r">
+                                <label class="subtitle" for="newMemberIsAdmin">Admin</label>
+                                <div class="checkbox-wrapper">
+                                    <input type="checkbox" name="newMemberIsAdmin" id="newMemberIsAdmin">
+                                    <label for="newMemberIsAdmin" class="toggle"><span></span></label>
+                                </div>
+                            </div>
+                            <button type="submit" class="main-btn">Add</button>
+                        </form>
+                    </div>
+                </details>
+            </div>
         </div>
     </div>
 

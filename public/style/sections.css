@@ -1,5 +1,9 @@
 @import url(base.css);
 
+*{
+    transition: all ease-in-out .1s;
+}
+
 .container{
     display: flex;
     flex-direction: column;
@@ -145,6 +149,58 @@
     display: flex !important;
     align-items: center !important;
     justify-content: left;
+}
+
+
+/* sudo section design */
+
+/* roles tab design */
+
+.container .content .members{
+    
+}
+
+.container .content #addMember details{
+    border-radius: 10px;
+    background-color: var(--el-bg-color);
+}
+
+.container .content #addMember details > summary{
+    cursor: pointer;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 5px 7px;
+    border-radius: 50px;
+}
+
+.container .content #addMember details > summary span{
+    display: flex;
+    align-items: center;
+}
+
+.container .content #addMember details div{
+    padding: 10px;
+}
+
+.container .content #addMember details div form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+}
+.container .content #addMember details div form .f-r{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.container .content #addMember details div form button{
+    min-width: 100% !important;
 }
 
 @media screen and (min-width: 50px) and (max-width: 767px){

@@ -14,9 +14,7 @@ window.activitiesPage = function(){
 window.plannerPage = function(){
     null;
 }
-window.sudoPage = function(){
-    null;
-}
+
 
 
 window.main = function(args){

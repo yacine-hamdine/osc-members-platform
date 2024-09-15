@@ -21,9 +21,9 @@
 </head>
 <body>
 
-  <div id="loading">
+  <div id="loading" style="display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1.5625rem; z-index: 100; position: fixed; height: 100vh; width: 100vw; top: 0; left: 0; background-color: #1e002c;      ">
     <!--<img src="./media/logos/OMP LOGO.svg" alt="logo">-->
-    <svg width="448" height="93" viewBox="0 0 448 93" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg style="width: 80%; max-width: 400px;" width="448" height="93" viewBox="0 0 448 93" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M55.2655 0.8274C33.7563 4.9344 17.4993 23.8432 17.4993 46.549C17.4993 50.4095 17.9693 54.1602 18.8551 57.7471H18.846C14.7264 50.802 12.3613 42.694 12.3613 34.0335C12.3613 24.4387 15.2642 15.522 20.2397 8.1136L20.2616 8.0824C27.7289 2.9824 36.7575 0 46.4827 0C49.4852 0 52.4212 0.2843 55.2655 0.8274Z" fill="#E2FF00"/>
       <path fill-rule="evenodd" clip-rule="evenodd" d="M20.4123 7.98032C8.10721 26.0936 9.98232 50.9595 26.0377 67.0149C28.7675 69.7447 31.752 72.0646 34.9146 73.9745L34.9082 73.9809C27.0844 71.983 19.6787 67.9221 13.5548 61.7982C6.77112 55.0145 2.51892 46.658 0.798216 37.9024L0.791016 37.8618L0.792015 37.8562C2.46672 28.9718 6.74172 20.4809 13.6169 13.6056C15.74 11.4825 18.0171 9.60742 20.4123 7.98032Z" fill="url(#paint0_linear_226_240)"/>
       <path fill-rule="evenodd" clip-rule="evenodd" d="M0.827299 37.6507C4.9344 59.1598 23.8431 75.4168 46.5489 75.4168C50.4094 75.4168 54.1602 74.9468 57.7471 74.061V74.0701C50.8021 78.1897 42.694 80.5548 34.0335 80.5548C24.4371 80.5548 15.519 77.6509 8.1099 72.6739L8.0824 72.6546C2.9827 65.1874 0 56.1584 0 46.4335C0 43.431 0.284199 40.4949 0.827299 37.6507Z" fill="#E2FF00"/>
@@ -54,10 +54,10 @@
       </defs>
     </svg>  
     <div id="dots">
-      <div id="loader"></div>
+      <div id="loader" style="width: 15px; aspect-ratio: 1; border-radius: 50%; animation: l5 1s infinite linear alternate;"></div>
     </div>
-    <div style="color: rgb(185, 111, 255); font-weight: bold; font-size: 1.25rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">
-      Beta v0.2.8
+    <div style="color: rgb(185, 111, 255); font-weight: bold; font-size: 1.25rem; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; text-align: center;">
+      (Preview)<br>v0.2.8
     </div>
   </div>
 
@@ -101,16 +101,16 @@
         <img src="./media/images/pfp.png" alt="pfp">
       </div>
       <div class="subtitle" id="displayName">
-
+        Name
       </div>
       <div class="text" id="department">
-
+        Department
       </div>
       <div class="text" id="position">
-
+        Position
       </div>
       <div class="text" id="points">
-
+        Pts
       </div>
     </div>
 
